@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocoPrime - Criar Nova IA</title>
+  
+  <!-- Font DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  
+  <!-- Flaticon UI Icons CDN -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/promo.css">
+  <style>
+    /* Estilos específicos para a página de criação de IA */
+    .create-ai-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 60px 20px;
+    }
+    .form-section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .form-section-card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+    .form-section-card p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .input-row { grid-template-columns: 1fr; }
+    }
+    .input-group {
+      margin-bottom: 18px;
+    }
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .input-group input, 
+    .input-group select, 
+    .input-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-app);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+    .input-group input:focus, 
+    .input-group select:focus, 
+    .input-group textarea:focus {
+      border-color: var(--primary);
+      background: var(--bg-surface);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+    .input-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    /* Seletor de Modelos em Grid */
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .models-grid { grid-template-columns: 1fr; }
+    }
+    .model-card {
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      cursor: pointer;
+      background: var(--bg-app);
+      transition: var(--transition);
+      position: relative;
+    }
+    .model-card input {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+    }
+    .model-card.selected {
+      border-color: var(--primary);
+      background: rgba(79, 70, 229, 0.03);
+    }
+    .model-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .model-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .pro-badge {
+      background: #fef3c7;
+      color: #d97706;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+    /* Seletor de Template Visual */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .template-card {
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: var(--transition);
+    }
+    .template-card.selected {
+      border-color: var(--primary);
+      background: rgba(79, 70, 229, 0.04);
+      color: var(--primary);
+    }
+    /* Restrição de Domínio Pro */
+    .pro-restricted {
+      opacity: 0.6;
+      position: relative;
+      cursor: not-allowed;
+    }
+    .pro-restricted input {
+      cursor: not-allowed;
+    }
+    .pro-lock-notice {
+      font-size: 11px;
+      color: #d97706;
+      margin-top: 4px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-submit-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Container Principal com ID para receber a Sidebar -->
+  <div class="app-container" id="appContainer">
+
+    <!-- Conteúdo Principal (Sidebar e Cabeçalho injetados via JS) -->
+    <main class="main-content" id="mainContent">
+
+      <div class="create-ai-container">
+        
+        <div class="welcome-header" style="margin-bottom: 24px;">
+          <div>
+            <h1>Criar Novo Agente de IA 🚀</h1>
+            <p>Configure a personalidade, modelo e aparência do seu assistente inteligente.</p>
+          </div>
+          <a href="../index.html" class="btn-secondary" style="padding: 10px 16px; border-radius: 8px; display:inline-flex; align-items:center; gap:6px;">
+            <i class="fi fi-rr-arrow-left"></i> Voltar ao Dashboard
+          </a>
+        </div>
+
+        <form id="createAiForm">
+          
+          <!-- Seção 1: Informações Básicas -->
+          <div class="form-section-card">
+            <h2>1. Informações Básicas</h2>
+            <p>Defina a identidade visual e o nome do seu agente.</p>
+            
+            <div class="input-row">
+              <div class="input-group">
+                <label for="aiName">Nome da IA *</label>
+                <input type="text" id="aiName" placeholder="Ex: Atendente FocoPrime" required>
+              </div>
+              <div class="input-group">
+                <label for="aiSlug">Link / Slug único (URL) *</label>
+                <input type="text" id="aiSlug" placeholder="Ex: atendente-loja" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="aiDescription">Descrição Curta</label>
+              <input type="text" id="aiDescription" placeholder="Ex: Especialista em atendimento ao cliente e conversão de vendas.">
+            </div>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label for="aiLogoUrl">URL do Logótipo (Ícone)</label>
+                <input type="url" id="aiLogoUrl" placeholder="https://exemplo.com/logo.png">
+              </div>
+              <div class="input-group">
+                <label for="aiThemeColor">Cor Tema Principal</label>
+                <input type="color" id="aiThemeColor" value="#6366f1" style="height: 44px; padding: 4px;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção 2: Cérebro & Modelos -->
+          <div class="form-section-card">
+            <h2>2. Cérebro & Motor de IA</h2>
+            <p>Escolha qual modelo de inteligência artificial irá alimentar as respostas.</p>
+            
+            <div class="models-grid">
+              <label class="model-card selected">
+                <input type="radio" name="aiModel" value="foco-wanga-3.0" checked>
+                <h4>Foco Wanga 3.0 <span class="pro-badge">PRO</span></h4>
+                <p>Modelo topo de linha otimizado para mercado local e alta precisão.</p>
+              </label>
+
+              <label class="model-card">
+                <input type="radio" name="aiModel" value="llama-3-70b">
+                <h4>Llama 3 70B</h4>
+                <p>Altamente inteligente, ideal para raciocínio complexo e suporte técnico.</p>
+              </label>
+
+              <label class="model-card">
+                <input type="radio" name="aiModel" value="mixtral-8x7b">
+                <h4>Mixtral 8x7B</h4>
+                <p>Rápido e eficiente para respostas de e-commerce e vendas em massa.</p>
+              </label>
+            </div>
+          </div>
+
+          <!-- Seção 3: Personalidade & Instruções (System Prompt) -->
+          <div class="form-section-card">
+            <h2>3. Personalidade e Instruções</h2>
+            <p>Defina o comportamento exato, tom de voz e regras de atendimento da IA.</p>
+
+            <div class="input-group">
+              <label for="aiSystemPrompt">Instruções do Sistema (System Prompt) *</label>
+              <textarea id="aiSystemPrompt" placeholder="Ex: Você é um assistente virtual especialista em calçados. Seja sempre educado, responda em português claro e ajude o cliente a encontrar o tamanho certo..." required></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="aiWelcomeMessage">Mensagem de Boas-Vindas no Chat</label>
+              <input type="text" id="aiWelcomeMessage" placeholder="Ex: Olá! 👋 Como posso ajudar você a encontrar o produto perfeito hoje?">
+            </div>
+          </div>
+
+          <!-- Seção 4: Template Visual & Domínio Personalizado -->
+          <div class="form-section-card">
+            <h2>4. Apresentação e Domínio</h2>
+            <p>Escolha o template do widget de chat e defina o domínio.</p>
+
+            <div class="input-group">
+              <label>Template Visual do Chat</label>
+              <div class="templates-grid" id="templatesGrid">
+                <div class="template-card selected" data-template="modern">Moderno (Flutuante)</div>
+                <div class="template-card" data-template="minimal">Minimalista</div>
+                <div class="template-card" data-template="fullscreen">Tela Cheia (Landing Page)</div>
+              </div>
+            </div>
+
+            <div class="input-group pro-restricted" id="customDomainGroup">
+              <label for="aiCustomDomain">Domínio Personalizado (Ex: chat.sualoja.com)</label>
+              <input type="text" id="aiCustomDomain" placeholder="Disponível apenas no Plano Pro" disabled>
+              <div class="pro-lock-notice">
+                <i class="fi fi-sr-lock"></i> Recurso restrito para usuários do plano Pro. Faça upgrade para desbloquear.
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-submit-container">
+            <button type="submit" class="btn-primary" id="btnSaveAi" style="padding: 12px 28px; font-size: 15px;">
+              <i class="fi fi-rr-check"></i> Criar e Publicar IA
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Script modular de autenticação, sidebar, header e gravação no Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { renderSidebar, initSidebarListeners } from "../components/sidebar.js";
+    import { renderHeader, initHeaderListeners } from "../components/header.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAwj0vcsUbdFDwFLt3xfOHCC--OhpF6nXs",
+        authDomain: "focoplataforms.firebaseapp.com",
+        databaseURL: "https://focoplataforms-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "focoplataforms",
+        storageBucket: "focoplataforms.firebasestorage.app",
+        messagingSenderId: "363051075501",
+        appId: "1:363051075501:web:3ed9f67c5b46badce34324"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let currentUser = null;
+
+    // Injeta componentes visuais
+    document.addEventListener('DOMContentLoaded', () => {
+        const appContainer = document.getElementById('appContainer');
+        const mainContent = document.getElementById('mainContent');
+
+        if (appContainer) {
+            appContainer.insertAdjacentHTML('afterbegin', renderSidebar());
+            initSidebarListeners();
+        }
+
+        if (mainContent) {
+            mainContent.insertAdjacentHTML('afterbegin', renderHeader());
+            initHeaderListeners();
+        }
+
+        // Interação de seleção de modelos
+        document.querySelectorAll('.model-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+            });
+        });
+
+        // Interação de seleção de templates
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+        });
+    });
+
+    // Monitora usuário logado
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            // Se o usuário for Pro, podemos habilitar o campo de domínio personalizado aqui no futuro
+        } else {
+            const cachedUser = localStorage.getItem('focoai_user');
+            if (!cachedUser) {
+                window.location.href = '../auth/login/index.html';
+            }
+        }
+    });
+
+    // Submissão do Formulário de Criação de IA
+    document.getElementById('createAiForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('aiName').value.trim();
+        const slug = document.getElementById('aiSlug').value.trim().toLowerCase().replace(/\s+/g, '-');
+        const description = document.getElementById('aiDescription').value.trim();
+        const logoUrl = document.getElementById('aiLogoUrl').value.trim();
+        const themeColor = document.getElementById('aiThemeColor').value;
+        const model = document.querySelector('input[name="aiModel"]:checked').value;
+        const systemPrompt = document.getElementById('aiSystemPrompt').value.trim();
+        const welcomeMessage = document.getElementById('aiWelcomeMessage').value.trim();
+        const template = document.querySelector('.template-card.selected').getAttribute('data-template');
+
+        if (!slug) {
+            alert('Por favor, informe um link/slug válido para a sua IA.');
+            return;
+        }
+
+        const btnSubmit = document.getElementById('btnSaveAi');
+        btnSubmit.textContent = 'Salvando IA...';
+        btnSubmit.disabled = true;
+
+        try {
+            const userId = currentUser ? currentUser.uid : 'anon_user';
+            const aiData = {
+                ownerUid: userId,
+                name: name,
+                slug: slug,
+                description: description,
+                logoUrl: logoUrl || 'https://placehold.co/100x100/6366f1/ffffff?text=AI',
+                themeColor: themeColor,
+                model: model,
+                systemPrompt: systemPrompt,
+                welcomeMessage: welcomeMessage || 'Olá! Como posso ajudar?',
+                template: template,
+                createdAt: new Date().toISOString()
+            };
+
+            // Salva no Realtime Database na pasta "assistants/<slug>" ou "assistants/<userId>_<slug>"
+            await set(ref(db, 'assistants/' + slug), aiData);
+
+            alert('Parabéns! Sua Inteligência Artificial foi criada com sucesso.');
+            window.location.href = '../index.html';
+
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao salvar IA no Firebase: ' + error.message);
+            btnSubmit.textContent = 'Criar e Publicar IA';
+            btnSubmit.disabled = false;
+        }
+    });
+  </script>
+</body>
+</html>
