@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocoPrime - Dashboard</title>
+  
+  <!-- Font DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  
+  <!-- Flaticon UI Icons CDN -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/promo.css">
+</head>
+<body>
+
+  <!-- Container Principal com ID para receber a Sidebar -->
+  <div class="app-container" id="appContainer">
+
+    <!-- Conteúdo Principal (Sidebar e Cabeçalho injetados via JS) -->
+    <main class="main-content" id="mainContent">
+
+      <!-- Área de Conteúdo / Dashboard -->
+      <div class="dashboard-body">
+        
+        <!-- Header de Boas-vindas -->
+        <div class="welcome-header">
+          <div>
+            <h1 id="welcomeTitle">Olá, Carregando... 👋</h1>
+            <p>Aqui está o resumo dos seus sites, agentes de IA e métricas de desempenho.</p>
+          </div>
+          <button class="btn-primary">
+            <i class="fi fi-rr-plus"></i>
+            <span>Criar Uma Nova IA</span>
+          </button>
+        </div>
+
+        <!-- Grid de Cards Stat -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Últimos 30 dias</span>
+            </div>
+            <div class="stat-value-container">
+              <h2 class="stat-value" data-value="124.500 MZN">124.500 MZN</h2>
+            </div>
+            <div class="stat-footer">
+              <div class="stat-trend trend-up">
+                <i class="fi fi-rr-stats"></i>
+                <span>Crescimento este mês</span>
+              </div>
+              <span class="stat-subtext">Comparado ao mês anterior</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Ganhos Anuais</span>
+              <span class="badge-tag tag-danger">
+                <i class="fi fi-rr-arrow-small-down"></i> 0%
+              </span>
+            </div>
+            <div class="stat-value-container">
+              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
+            </div>
+            <div class="stat-footer">
+              <div class="stat-trend">
+                <i class="fi fi-rr-stats"></i>
+                <span>Crescimento anual</span>
+              </div>
+              <span class="stat-subtext">Comparado ao ano anterior</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Pagamentos Pendentes</span>
+              <span class="badge-tag tag-danger">
+                <i class="fi fi-rr-arrow-small-down"></i> -5%
+              </span>
+            </div>
+            <div class="stat-value-container">
+              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
+            </div>
+            <div class="stat-footer">
+              <div class="stat-trend">
+                <i class="fi fi-rr-stats"></i>
+                <span>Redução em relação ao mês passado</span>
+              </div>
+              <span class="stat-subtext">Os pedidos aguardando pagamento</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção Minhas IAs & Criador de Sites -->
+        <div class="content-section">
+          <div class="section-title-bar">
+            <h2>Suas IAs & Sites Ativos</h2>
+            <a href="#" class="link-btn">Ver todos</a>
+          </div>
+
+          <div class="ai-cards-grid">
+            <div class="ai-card">
+              <div class="ai-card-top">
+                <div class="ai-icon-box">
+                  <i class="fi fi-rr-bot"></i>
+                </div>
+                <span class="status-badge status-online">Ativo</span>
+              </div>
+              <h3>Atendente Inteligente</h3>
+              <p>IA conectada ao site e WhatsApp para captação de leads e agendamentos automáticos.</p>
+              <div class="ai-card-meta">
+                <span><i class="fi fi-rr-interactive"></i> 1.420 interações</span>
+                <span><i class="fi fi-rr-globe"></i> meudominio.com</span>
+              </div>
+              <div class="ai-card-actions">
+                <button class="btn-secondary">Editar IA</button>
+                <button class="btn-outline"><i class="fi fi-rr-settings-sliders"></i></button>
+              </div>
+            </div>
+
+            <div class="ai-card">
+              <div class="ai-card-top">
+                <div class="ai-icon-box accent-purple">
+                  <i class="fi fi-rr-shopping-cart"></i>
+                </div>
+                <span class="status-badge status-online">Ativo</span>
+              </div>
+              <h3>E-Commerce Copilot</h3>
+              <p>Recomenda produtos aos visitantes do site em tempo real com algoritmo próprio.</p>
+              <div class="ai-card-meta">
+                <span><i class="fi fi-rr-interactive"></i> 890 interações</span>
+                <span><i class="fi fi-rr-globe"></i> loja.com.mz</span>
+              </div>
+              <div class="ai-card-actions">
+                <button class="btn-secondary">Editar IA</button>
+                <button class="btn-outline"><i class="fi fi-rr-settings-sliders"></i></button>
+              </div>
+            </div>
+
+            <div class="ai-card new-ai-card">
+              <div class="new-ai-content">
+                <div class="add-icon">
+                  <i class="fi fi-rr-add"></i>
+                </div>
+                <h3>Criar Novo Agente de IA</h3>
+                <p>Construa um novo modelo de inteligência artificial personalizado para o seu site.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Script de Autenticação / Proteção de Rota -->
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
