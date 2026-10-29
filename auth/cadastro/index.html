@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocoPrime - Criar Conta</title>
+    <!-- Google Fonts: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../auth/style.css">
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- Logotipo FocoPrime -->
+        <div class="auth-logo-wrapper">
+            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x36/6366f1/ffffff?text=FocoPrime'">
+        </div>
+
+        <!-- Botão Voltar (Oculto na Etapa 1) -->
+        <button type="button" class="auth-back-btn hidden" id="backBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+        </button>
+
+        <!-- Indicador de Etapas (Step Indicator) -->
+        <div class="step-indicator">
+            <span class="step-pill active" id="stepPill1"></span>
+            <span class="step-pill" id="stepPill2"></span>
+            <span class="step-pill" id="stepPill3"></span>
+        </div>
+
+        <!-- Overlay / Modal de Progresso de Processamento -->
+        <div class="processing-overlay" id="processingOverlay">
+            <div class="processing-card">
+                <div class="processing-spinner"></div>
+                <h3 id="processingTitle">Criando sua conta...</h3>
+                <p id="processingSubtitle">Configurando seu ambiente no FocoPrime</p>
+                <div class="processing-progress-bar">
+                    <div class="processing-progress-fill" id="processingProgressFill"></div>
+                </div>
+                <span class="processing-percentage" id="processingPercentage">0%</span>
+            </div>
+        </div>
+
+        <form id="signupForm" class="auth-form">
+            
+            <!-- ETAPA 1: Inserir E-mail -->
+            <div class="wizard-step step-1 active" id="step1">
+                <h1 class="auth-title">Insira seu e-mail</h1>
+                <p class="auth-subtitle">Comece a criar inteligências artificiais e sites incríveis.</p>
+
+                <div class="auth-input-group">
+                    <label for="emailInput">E-mail</label>
+                    <input type="email" id="emailInput" placeholder="Digite seu e-mail para começar" required>
+                </div>
+
+                <button type="button" class="auth-btn-primary" id="btnNext1">Continuar</button>
+
+                <div class="auth-divider"><span>ou</span></div>
+
+                <button type="button" class="auth-btn-social" id="btnGoogle">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.19v3.15C3.17 21.32 7.23 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.19C.43 8.12 0 9.87 0 12s.43 3.88 1.19 5.42l4.09-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.17 2.68 1.19 6.58l4.09 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+                    Continuar com o Google
+                </button>
+            </div>
+
+            <!-- ETAPA 2: Configurar Credenciais -->
+            <div class="wizard-step step-2" id="step2">
+                <h1 class="auth-title">Configure suas credenciais</h1>
+                <p class="auth-subtitle">Defina seu nome de usuário e senha de acesso.</p>
+
+                <div class="auth-input-group">
+                    <label for="usernameInput">Nome de usuário</label>
+                    <input type="text" id="usernameInput" placeholder="Ex: hirianodevs" required>
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="passwordInput">Senha</label>
+                    <input type="password" id="passwordInput" placeholder="Mínimo 6 caracteres" required>
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="confirmPasswordInput">Confirmar senha</label>
+                    <input type="password" id="confirmPasswordInput" placeholder="Confirme sua senha" required>
+                </div>
+
+                <button type="button" class="auth-btn-primary" id="btnNext2">Continuar</button>
+            </div>
+
+            <!-- ETAPA 3: Finalizar Conta -->
+            <div class="wizard-step step-3" id="step3">
+                <h1 class="auth-title">Finalize sua conta</h1>
+                <p class="auth-subtitle">Conte-nos um pouco mais sobre você.</p>
+
+                <div class="auth-row-inputs">
+                    <div class="auth-input-group">
+                        <label for="firstNameInput">Nome</label>
+                        <input type="text" id="firstNameInput" placeholder="Seu nome">
+                    </div>
+                    <div class="auth-input-group">
+                        <label for="lastNameInput">Sobrenome</label>
+                        <input type="text" id="lastNameInput" placeholder="Seu sobrenome">
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="orgInput">Organização (opcional)</label>
+                    <input type="text" id="orgInput" placeholder="Sua empresa ou projeto">
+                </div>
+
+                <p class="auth-terms">
+                    Ao clicar em "Criar conta", você concorda com nossos <a href="#" class="auth-link">Termos de Uso</a> e reconhece que leu e entendeu nossa <a href="#" class="auth-link">Política de Privacidade</a>.
+                </p>
+
+                <button type="submit" class="auth-btn-primary" id="btnSubmit">
+                    <span id="btnSubmitText">Criar conta</span>
+                </button>
+            </div>
+
+        </form>
+
+        <p class="auth-subtitle auth-footer-text">Já tem uma conta? <a href="../login/index.html" class="auth-link">Entrar</a></p>
+    </div>
+
+    <!-- Script com Firebase Real e Barra de Progresso Animada -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithPopup, 
+            GoogleAuthProvider 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwj0vcsUbdFDwFLt3xfOHCC--OhpF6nXs",
+            authDomain: "focoplataforms.firebaseapp.com",
+            databaseURL: "https://focoplataforms-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "focoplataforms",
+            storageBucket: "focoplataforms.firebasestorage.app",
+            messagingSenderId: "363051075501",
+            appId: "1:363051075501:web:3ed9f67c5b46badce34324"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let currentStep = 1;
+
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+
+        const stepPill1 = document.getElementById('stepPill1');
+        const stepPill2 = document.getElementById('stepPill2');
+        const stepPill3 = document.getElementById('stepPill3');
+
+        const backBtn = document.getElementById('backBtn');
+        const btnNext1 = document.getElementById('btnNext1');
+        const btnNext2 = document.getElementById('btnNext2');
+        
+        const processingOverlay = document.getElementById('processingOverlay');
+        const processingTitle = document.getElementById('processingTitle');
+        const processingSubtitle = document.getElementById('processingSubtitle');
+        const processingProgressFill = document.getElementById('processingProgressFill');
+        const processingPercentage = document.getElementById('processingPercentage');
+
+        function updateStep(step) {
+            currentStep = step;
+            step1.classList.remove('active');
+            step2.classList.remove('active');
+            step3.classList.remove('active');
+            stepPill1.classList.remove('active');
+            stepPill2.classList.remove('active');
+            stepPill3.classList.remove('active');
+
+            if (currentStep > 1) {
+                backBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.add('hidden');
+            }
+
+            if (currentStep === 1) {
+                step1.classList.add('active');
+                stepPill1.classList.add('active');
+            } else if (currentStep === 2) {
+                step2.classList.add('active');
+                stepPill2.classList.add('active');
+            } else if (currentStep === 3) {
+                step3.classList.add('active');
+                stepPill3.classList.add('active');
+            }
+        }
+
+        btnNext1.addEventListener('click', () => {
+            const email = document.getElementById('emailInput').value.trim();
+            if (email && email.includes('@')) {
+                updateStep(2);
+            } else {
+                alert('Por favor, insira um e-mail válido.');
+                document.getElementById('emailInput').focus();
+            }
+        });
+
+        btnNext2.addEventListener('click', () => {
+            const pass = document.getElementById('passwordInput').value;
+            const confirmPass = document.getElementById('confirmPasswordInput').value;
+
+            if (pass.length < 6) {
+                alert('A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            if (pass !== confirmPass) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            updateStep(3);
+        });
+
+        backBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                updateStep(currentStep - 1);
+            }
+        });
+
+        // Função para animar a barra de progresso do processamento
+        function runProgressAnimation(targetPercent, duration, titleText, subtitleText) {
+            return new Promise((resolve) => {
+                if (titleText) processingTitle.textContent = titleText;
+                if (subtitleText) processingSubtitle.textContent = subtitleText;
+
+                let currentPercent = parseInt(processingProgressFill.style.width) || 0;
+                let startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    let progress = timestamp - startTime;
+                    let current = Math.min(currentPercent + (targetPercent - currentPercent) * (progress / duration), targetPercent);
+                    
+                    processingProgressFill.style.width = current + '%';
+                    processingPercentage.textContent = Math.round(current) + '%';
+
+                    if (progress < duration && current < targetPercent) {
+                        requestAnimationFrame(step);
+                    } else {
+                        resolve();
+                    }
+                }
+                requestAnimationFrame(step);
+            });
+        }
+
+        // Submissão real do formulário (Firebase Auth + Realtime Database)
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const username = document.getElementById('usernameInput').value.trim() || email.split('@')[0];
+            const firstName = document.getElementById('firstNameInput').value.trim();
+            const lastName = document.getElementById('lastNameInput').value.trim();
+            const organization = document.getElementById('orgInput').value.trim();
+
+            // Exibe overlay de progresso
+            processingOverlay.classList.add('active');
+            processingProgressFill.style.width = '0%';
+            processingPercentage.textContent = '0%';
+
+            try {
+                // Progresso 1: Autenticando no Firebase Auth (30%)
+                await runProgressAnimation(30, 400, 'Autenticando...', 'Criando credenciais no Firebase Auth');
+                
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Progresso 2: Gravando perfil no Realtime Database (75%)
+                await runProgressAnimation(75, 500, 'Salvando dados...', 'Salvando perfil no Realtime Database');
+
+                const displayName = `${firstName} ${lastName}`.trim() || username;
+                
+                const userData = {
+                    uid: user.uid,
+                    email: email,
+                    username: username,
+                    firstName: firstName,
+                    lastName: lastName,
+                    displayName: displayName,
+                    organization: organization,
+                    plan: 'Pessoal · Gratuito',
+                    credits: 250,
+                    createdAt: new Date().toISOString()
+                };
+
+                await set(ref(db, 'users/' + user.uid), userData);
+
+                // Progresso 3: Finalizando e Redirecionando (100%)
+                await runProgressAnimation(100, 300, 'Concluído!', 'Redirecionando para o FocoPrime');
+
+                // Salva também no localStorage para sessão rápida da UI
+                localStorage.setItem('focoai_user', JSON.stringify(userData));
+
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 400);
+
+            } catch (error) {
+                console.error(error);
+                processingOverlay.classList.remove('active');
+                alert('Erro ao criar conta: ' + error.message);
+            }
+        });
+
+        // Cadastro Social com Google
+        const btnGoogle = document.getElementById('btnGoogle');
+        btnGoogle.addEventListener('click', async () => {
+            processingOverlay.classList.add('active');
+            processingProgressFill.style.width = '0%';
+            processingPercentage.textContent = '0%';
+
+            try {
+                await runProgressAnimation(40, 400, 'Conectando ao Google...', 'Autenticando conta Google');
+                const provider = new GoogleAuthProvider();
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                await runProgressAnimation(80, 500, 'Salvando dados...', 'Sincronizando perfil com o banco de dados');
+
+                const defaultUsername = user.email ? user.email.split('@')[0] : 'usuario';
+                const displayName = user.displayName || defaultUsername;
+
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                    username: defaultUsername,
+                    displayName: displayName,
+                    photoURL: user.photoURL || '',
+                    plan: 'Pessoal · Gratuito',
+                    credits: 250,
+                    createdAt: new Date().toISOString()
+                };
+
+                await set(ref(db, 'users/' + user.uid), userData);
+                await runProgressAnimation(100, 300, 'Pronto!', 'Tudo configurado com sucesso');
+
+                localStorage.setItem('focoai_user', JSON.stringify(userData));
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 400);
+
+            } catch (error) {
+                console.error(error);
+                processingOverlay.classList.remove('active');
+                alert('Erro no login com Google: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
