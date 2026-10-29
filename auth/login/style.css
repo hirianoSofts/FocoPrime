@@ -1,0 +1,252 @@
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Estilos da Página de Login inspirada no Runway */
+.auth-body {
+    background-color: #ffffff;
+    font-family: var(--font-family);
+    color: #111827;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+.auth-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-input-group input {
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    outline: none;
+    color: #111827;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-input-group input::placeholder {
+    color: #9ca3af;
+}
+
+.auth-input-group input:focus {
+    border-color: #111827;
+    box-shadow: 0 0 0 1px #111827;
+}
+
+.auth-terms {
+    font-size: 0.75rem;
+    color: #6b7280;
+    line-height: 1.4;
+    text-align: left;
+    margin: 4px 0 12px 0;
+}
+
+.auth-btn-primary {
+    width: 100%;
+    padding: 16px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 4px;
+}
+
+.auth-btn-primary:hover {
+    background-color: #262626;
+}
+
+.auth-btn-social {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.auth-btn-social:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.auth-footer-link {
+    margin-top: 24px;
+}
+
+.auth-footer-link a {
+    color: #6b7280;
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+.auth-footer-link a:hover {
+    color: #111827;
+    text-decoration: underline;
+}
+
+/* Logotipo na Página de Login */
+.auth-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.auth-logo {
+    height: 38px;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   OVERLAY DE PROGRESSO DE PROCESSAMENTO
+   ========================================================================== */
+.processing-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.processing-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.processing-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.processing-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 4px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.processing-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.processing-card p {
+  font-size: 0.88rem;
+  color: #6b7280;
+  margin: 0 0 12px 0;
+}
+
+.processing-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.processing-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  border-radius: 9999px;
+  transition: width 0.1s linear;
+}
+
+.processing-percentage {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6366f1;
+  margin-top: 4px;
+}
