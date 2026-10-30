@@ -384,7 +384,7 @@
         }
     });
 
-    // Submissão do Formulário de Criação de IA
+        // Submissão do Formulário de Criação de IA
     document.getElementById('createAiForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -423,10 +423,13 @@
                 createdAt: new Date().toISOString()
             };
 
-            // Salva no Realtime Database na pasta "assistants/<slug>" ou "assistants/<userId>_<slug>"
+            // Salva no Realtime Database
             await set(ref(db, 'assistants/' + slug), aiData);
 
-            alert('Parabéns! Sua Inteligência Artificial foi criada com sucesso.');
+            // Link público oficial apontando para o domínio principal
+            const publicLink = `https://focoprime.online/chat/?ai=${slug}`;
+
+            alert(`Parabéns! Sua Inteligência Artificial foi criada com sucesso.\n\nLink público da IA:\n${publicLink}`);
             window.location.href = '../index.html';
 
         } catch (error) {
@@ -436,6 +439,7 @@
             btnSubmit.disabled = false;
         }
     });
+
   </script>
 </body>
 </html>
