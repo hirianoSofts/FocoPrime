@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocoPrime - Planos e Assinaturas</title>
+  
+  <!-- Font DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  
+  <!-- Flaticon UI Icons CDN -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/promo.css">
+  <link rel="stylesheet" href="../css/upgradebtn.css">
+  
+  <style>
+    .plans-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 60px 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .plans-header-center {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .plans-header-center h1 {
+      font-size: clamp(24px, 5vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .plans-header-center p {
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 0 10px;
+    }
+
+    /* Billing Toggle (Mensal / Anual) */
+    .billing-toggle-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .billing-toggle-wrapper span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .billing-toggle-wrapper span.active {
+      color: var(--text-main);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: var(--border-color);
+      transition: .3s;
+      border-radius: var(--radius-full);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .discount-badge {
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      margin-left: 4px;
+      display: inline-block;
+    }
+
+    /* Cards de Planos Grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .pricing-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.2);
+    }
+
+    .pricing-card .popular-tag {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .pricing-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pricing-card .plan-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      min-height: auto;
+    }
+
+    .price-box {
+      margin-bottom: 20px;
+    }
+
+    .price-box .amount {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+    }
+
+    .price-box .period {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .features-list li i {
+      font-size: 14px;
+      color: var(--success);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .features-list li.disabled {
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+
+    .features-list li.disabled i {
+      color: var(--text-light);
+    }
+
+    .plan-btn {
+      position: relative;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .plan-btn:disabled {
+      opacity: 0.85;
+      cursor: not-allowed;
+    }
+
+    /* Estado de Loading Giratório no Botão (Sem Texto) */
+    .plan-btn.loading {
+      color: transparent !important;
+      pointer-events: none;
+    }
+
+    .plan-btn.loading::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spinPlanBtn 0.8s linear infinite;
+    }
+
+    .btn-outline-plan.loading::after {
+      border: 2.5px solid rgba(0, 0, 0, 0.2);
+      border-top-color: var(--text-main);
+    }
+
+    @keyframes spinPlanBtn {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn-outline-plan {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline-plan:hover {
+      background: var(--border-color);
+    }
+
+    .btn-solid-plan {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-solid-plan:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Seção Tabela Comparativa */
+    .comparison-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .comparison-section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .comparison-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+      min-width: 600px;
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .comparison-table th {
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--bg-subtle);
+      white-space: nowrap;
+    }
+
+    .comparison-table td:not(:first-child), .comparison-table th:not(:first-child) {
+      text-align: center;
+    }
+
+    .comparison-table td i.fi-rr-check {
+      color: var(--success);
+    }
+
+    .comparison-table td i.fi-rr-cross {
+      color: var(--danger);
+    }
+
+    /* Barras de Rodapé (Cancelamento e Políticas) */
+    .guarantees-bar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .guarantee-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guarantee-item i {
+      font-size: 22px;
+      color: var(--primary);
+    }
+
+    .guarantee-item h4 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .guarantee-item p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Responsividade refinada para Mobile */
+    @media (max-width: 900px) {
+      .plans-container {
+        padding: 16px 10px 40px 10px;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 16px;
+        margin: 0 0 30px 0;
+      }
+      .pricing-card {
+        padding: 20px 16px;
+      }
+      .guarantees-bar {
+        grid-template-columns: 1fr;
+        padding: 16px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container" id="appContainer">
+    <main class="main-content" id="mainContent">
+      <div class="plans-container">
+        
+        <div class="plans-header-center">
+          <h1>Planos e Assinaturas</h1>
+          <p>Escolha o plano ideal para impulsionar seus agentes de Inteligência Artificial.</p>
+        </div>
+
+        <!-- Seletor Mensal / Anual (10% de desconto) -->
+        <div class="billing-toggle-wrapper">
+          <span id="monthlyLabel" class="active">Mensal</span>
+          <label class="switch">
+            <input type="checkbox" id="billingToggle">
+            <span class="slider"></span>
+          </label>
+          <span id="annualLabel">Anual <span class="discount-badge">-10% OFF</span></span>
+        </div>
+
+        <!-- Grid de Planos -->
+        <div class="pricing-grid">
+          
+          <!-- Plano Base -->
+          <div class="pricing-card">
+            <h3>Plano Base</h3>
+            <p class="plan-desc">Perfeito para quem está começando a testar agentes de inteligência artificial.</p>
+            <div class="price-box">
+              <span class="amount" data-monthly="0 USD" data-annual="0 USD">0 USD</span>
+              <span class="period" data-monthly="/ mês" data-annual="/ ano">/ mês</span>
+            </div>
+            <ul class="features-list">
+              <li><i class="fi fi-rr-check"></i> 1 Inteligência Artificial</li>
+              <li><i class="fi fi-rr-check"></i> Domínio gratuito (.focoprime.online)</li>
+              <li><i class="fi fi-rr-check"></i> 10 mensagens por dia</li>
+              <li class="disabled"><i class="fi fi-rr-cross"></i> Upload de imagens não incluso</li>
+              <li class="disabled"><i class="fi fi-rr-cross"></i> PWA Mobile & Customização</li>
+            </ul>
+            <button class="plan-btn btn-outline-plan" id="btnPlanBase" onclick="window.selectPlan('Plano Base', 250, this)">Escolher Plano Base</button>
+          </div>
+
+          <!-- Plano Spark (Destaque) -->
+          <div class="pricing-card featured">
+            <div class="popular-tag">Mais Popular</div>
+            <h3>Plano Spark</h3>
+            <p class="plan-desc">Ideal para criadores e pequenos negócios escalarem o atendimento.</p>
+            <div class="price-box">
+              <span class="amount" data-monthly="20 USD" data-annual="216 USD">20 USD</span>
+              <span class="period" data-monthly="/ mês" data-annual="/ ano (18 USD/mês)">/ mês</span>
+            </div>
+            <ul class="features-list">
+              <li><i class="fi fi-rr-check"></i> 4 Inteligências Artificiais</li>
+              <li><i class="fi fi-rr-check"></i> Domínio personalizado</li>
+              <li><i class="fi fi-rr-check"></i> 700 tokens de IA</li>
+              <li><i class="fi fi-rr-check"></i> 3 uploads de imagens por dia</li>
+              <li><i class="fi fi-rr-check"></i> Ads integração</li>
+              <li><i class="fi fi-rr-check"></i> Template personalizável</li>
+              <li><i class="fi fi-rr-check"></i> PWA mobile</li>
+            </ul>
+            <button class="plan-btn btn-solid-plan" id="btnPlanSpark" onclick="window.selectPlan('Plano Spark', 700, this)">Assinar Spark</button>
+          </div>
+
+          <!-- Plano Focos Pro -->
+          <div class="pricing-card">
+            <h3>Focos Pro</h3>
+            <p class="plan-desc">Poder máximo para empresas, agências e ecossistemas complexos.</p>
+            <div class="price-box">
+              <span class="amount" data-monthly="50 USD" data-annual="540 USD">50 USD</span>
+              <span class="period" data-monthly="/ mês" data-annual="/ ano (45 USD/mês)">/ mês</span>
+            </div>
+            <ul class="features-list">
+              <li><i class="fi fi-rr-check"></i> 10 Inteligências Artificiais</li>
+              <li><i class="fi fi-rr-check"></i> Domínio personalizado</li>
+              <li><i class="fi fi-rr-check"></i> 1500 tokens de IA</li>
+              <li><i class="fi fi-rr-check"></i> 10 uploads de imagens por dia</li>
+              <li><i class="fi fi-rr-check"></i> Templates personalizáveis</li>
+              <li><i class="fi fi-rr-check"></i> PWA app dedicado</li>
+              <li><i class="fi fi-rr-check"></i> Cadastro de usuários & Histórico</li>
+              <li><i class="fi fi-rr-check"></i> Ads integração avançada</li>
+            </ul>
+            <button class="plan-btn btn-outline-plan" id="btnPlanPro" onclick="window.selectPlan('Focos Pro', 1500, this)">Assinar Pro</button>
+          </div>
+
+        </div>
+
+        <!-- Tabela Comparativa -->
+        <div class="comparison-section">
+          <h2>Comparação Detalhada de Recursos</h2>
+          <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Recurso</th>
+                  <th>Plano Base</th>
+                  <th>Plano Spark</th>
+                  <th>Focos Pro</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Inteligências Artificiais</td>
+                  <td>1 IA</td>
+                  <td>4 IAs</td>
+                  <td>10 IAs</td>
+                </tr>
+                <tr>
+                  <td>Domínio</td>
+                  <td>Gratuito (.focoprime.online)</td>
+                  <td>Personalizado</td>
+                  <td>Personalizado</td>
+                </tr>
+                <tr>
+                  <td>Mensagens / Tokens</td>
+                  <td>10 msgs/dia</td>
+                  <td>700 tokens</td>
+                  <td>1500 tokens</td>
+                </tr>
+                <tr>
+                  <td>Upload de Imagens</td>
+                  <td><i class="fi fi-rr-cross"></i></td>
+                  <td>3 por dia</td>
+                  <td>10 por dia</td>
+                </tr>
+                <tr>
+                  <td>PWA Mobile / App</td>
+                  <td><i class="fi fi-rr-cross"></i></td>
+                  <td><i class="fi fi-rr-check"></i></td>
+                  <td><i class="fi fi-rr-check"></i> (PWA App Completo)</td>
+                </tr>
+                <tr>
+                  <td>Cadastro de Usuários & Histórico</td>
+                  <td><i class="fi fi-rr-cross"></i></td>
+                  <td><i class="fi fi-rr-cross"></i></td>
+                  <td><i class="fi fi-rr-check"></i></td>
+                </tr>
+                <tr>
+                  <td>Integração de Ads</td>
+                  <td><i class="fi fi-rr-cross"></i></td>
+                  <td><i class="fi fi-rr-check"></i></td>
+                  <td><i class="fi fi-rr-check"></i> (Avançado)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Barra de Políticas e Cancelamento -->
+        <div class="guarantees-bar">
+          <div class="guarantee-item">
+            <i class="fi fi-rr-shield-check"></i>
+            <h4>Política de Satisfação</h4>
+            <p>Garantia de reembolso integral em até 7 dias após a assinatura caso não esteja satisfeito.</p>
+          </div>
+          <div class="guarantee-item">
+            <i class="fi fi-rr-time-oclock"></i>
+            <h4>Cancele Quando Quiser</h4>
+            <p>Sem multas ou taxas de fidelidade. Você gerencia e cancela a sua assinatura diretamente no painel a qualquer momento.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts de Firebase, Layout & Seleção de Planos -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { renderSidebar, initSidebarListeners } from "../components/sidebar.js";
+    import { renderHeader, initHeaderListeners } from "../components/header.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAwj0vcsUbdFDwFLt3xfOHCC--OhpF6nXs",
+        authDomain: "focoplataforms.firebaseapp.com",
+        databaseURL: "https://focoplataforms-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "focoplataforms",
+        storageBucket: "focoplataforms.firebasestorage.app",
+        messagingSenderId: "363051075501",
+        appId: "1:363051075501:web:3ed9f67c5b46badce34324"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let activeUserUid = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const appContainer = document.getElementById('appContainer');
+      const mainContent = document.getElementById('mainContent');
+
+      if (appContainer) {
+        appContainer.insertAdjacentHTML('afterbegin', renderSidebar('../'));
+        initSidebarListeners();
+      }
+
+      if (mainContent) {
+        mainContent.insertAdjacentHTML('afterbegin', renderHeader());
+        initHeaderListeners();
+      }
+
+      // Validação de Autenticação ao carregar a página de planos
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          activeUserUid = user.uid;
+        } else {
+          const cached = localStorage.getItem('focoai_user');
+          if (cached) {
+            try {
+              const parsed = JSON.parse(cached);
+              activeUserUid = parsed.uid;
+            } catch(e) {}
+          }
+          if (!activeUserUid) {
+            alert('Por favor, faça login ou cadastre-se primeiro.');
+            window.location.href = '../auth/login/index.html';
+          }
+        }
+      });
+
+      // Lógica de alternância Mensal / Anual
+      const billingToggle = document.getElementById('billingToggle');
+      const monthlyLabel = document.getElementById('monthlyLabel');
+      const annualLabel = document.getElementById('annualLabel');
+      const amounts = document.querySelectorAll('.pricing-card .amount');
+      const periods = document.querySelectorAll('.pricing-card .period');
+
+      billingToggle.addEventListener('change', () => {
+        const isAnnual = billingToggle.checked;
+        
+        if (isAnnual) {
+          monthlyLabel.classList.remove('active');
+          annualLabel.classList.add('active');
+        } else {
+          monthlyLabel.classList.add('active');
+          annualLabel.classList.remove('active');
+        }
+
+        amounts.forEach(el => {
+          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
+        });
+
+        periods.forEach(el => {
+          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
+        });
+      });
+    });
+
+    // Função global para selecionar o plano, ativar o spinner no botão, salvar no Firebase e redirecionar
+    window.selectPlan = async function(planName, creditsCount, buttonElement) {
+      buttonElement.classList.add('loading');
+      buttonElement.disabled = true;
+
+      try {
+        if (!activeUserUid) {
+          const cached = localStorage.getItem('focoai_user');
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            activeUserUid = parsed.uid;
+          }
+        }
+
+        if (!activeUserUid) {
+          alert('Sessão expirada. Faça login novamente.');
+          window.location.href = '../auth/login/index.html';
+          return;
+        }
+
+        // Salva o plano e os créditos no Firebase Realtime Database
+        const userRef = ref(db, 'users/' + activeUserUid);
+        await update(userRef, {
+          plan: planName,
+          credits: creditsCount,
+          planSelectedAt: new Date().toISOString()
+        });
+
+        // Atualiza também no localStorage
+        const cachedUser = localStorage.getItem('focoai_user');
+        if (cachedUser) {
+          let userData = JSON.parse(cachedUser);
+          userData.plan = planName;
+          userData.credits = creditsCount;
+          localStorage.setItem('focoai_user', JSON.stringify(userData));
+        }
+
+        // Redireciona para o Dashboard principal
+        window.location.href = '../index.html';
+
+      } catch (error) {
+        console.error('Erro ao salvar plano:', error);
+        buttonElement.classList.remove('loading');
+        buttonElement.disabled = false;
+        alert('Erro ao salvar o plano escolhido: ' + error.message);
+      }
+    };
+  </script>
+</body>
+</html>
