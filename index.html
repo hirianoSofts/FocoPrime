@@ -3,7 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FocoPrime - Dashboard</title>
+  <meta name="theme-color" content="#08a9e8">
+  <meta name="color-scheme" content="light">
+  <title>FocoPrime Dashboard</title>
+  
+  <meta name="description" content="A FocoPrime torna a inteligência artificial mais acessível. Crie, personalize e prepare os seus próprios assistentes de IA numa plataforma simples e moderna.">
+  <meta name="keywords" content="FocoPrime, inteligência artificial, criar IA, assistentes de IA, plataforma de IA, FocoAI, Moçambique">
+  <meta name="author" content="FocoPrime">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="googlebot" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://dashboard.focoprime.online/">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Open Graph: pré-visualização em WhatsApp, Facebook, LinkedIn e outras plataformas -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_MZ">
+  <meta property="og:site_name" content="FocoPrime">
+  <meta property="og:title" content="FocoPrime — Crie a sua própria inteligência artificial">
+  <meta property="og:description" content="Transforme as suas ideias em assistentes de inteligência artificial. Descubra uma forma mais acessível de criar com IA.">
+  <meta property="og:url" content="https://dashboard.focoprime.online/">
+  <meta property="og:image" content="https://dashboard.focoprime.online/assets/og-image.png">
+  <meta property="og:image:secure_url" content="https://dashboard.focoprime.online/assets/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="FocoPrime — Crie a sua própria inteligência artificial">
+
+  <!-- Twitter / X cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FocoPrime — Crie a sua própria inteligência artificial">
+  <meta name="twitter:description" content="Tecnologia acessível para transformar ideias em assistentes de inteligência artificial.">
+  <meta name="twitter:image" content="https://dashboard.focoprime.online/assets/og-image.png">
+  <meta name="twitter:image:alt" content="FocoPrime — Crie a sua própria inteligência artificial">
+
+  <!-- Dados estruturados para motores de busca -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "FocoPrime",
+    "url": "https://dashboard.focoprime.online/",
+    "logo": "https://dashboard.focoprime.online/assets/logo.png",
+    "description": "Plataforma que procura tornar a criação e utilização de inteligência artificial mais acessível."
+  }
+  </script>
   
   <!-- Font DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +65,9 @@
   
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/promo.css">
+  <link rel="stylesheet" href="css/upgradebtn.css">
+  <link rel="stylesheet" href="css/suasias.css">
+  <link rel="stylesheet" href="css/welcome.css">
 </head>
 <body>
 
@@ -28,16 +80,29 @@
       <!-- Área de Conteúdo / Dashboard -->
       <div class="dashboard-body">
         
-        <!-- Header de Boas-vindas -->
+        <!-- Header de Boas-vindas com Skeleton Dinâmico -->
         <div class="welcome-header">
-          <div>
-            <h1 id="welcomeTitle">Olá, Carregando... 👋</h1>
-            <p>Aqui está o resumo dos seus sites, agentes de IA e métricas de desempenho.</p>
+          <div class="welcome-titles-container">
+            <!-- Skeleton Inicial -->
+            <div class="welcome-skeleton" id="welcomeSkeleton">
+              <div class="skeleton-welcome-title skeleton-shine"></div>
+              <div class="skeleton-welcome-subtitle skeleton-shine"></div>
+            </div>
+            <!-- Conteúdo Real (Revelado com Transição Suave) -->
+            <div class="welcome-real-content" id="welcomeRealContent">
+              <h1 id="welcomeTitle">Olá, Carregando... 👋</h1>
+              <p>Aqui está o resumo dos seus sites, agentes de IA e métricas de desempenho.</p>
+            </div>
           </div>
-          <button class="btn-primary">
-            <i class="fi fi-rr-plus"></i>
-            <span>Criar Uma Nova IA</span>
-          </button>
+          
+          <!-- Botão Principal com Skeleton / Transição Integrada -->
+          <div class="welcome-action-wrapper">
+            <div class="welcome-btn-skeleton skeleton-shine" id="welcomeBtnSkeleton"></div>
+            <button class="btn-primary" id="welcomeActionBtn">
+              <i class="fi fi-rr-plus"></i>
+              <span>Criar Uma Nova IA</span>
+            </button>
+          </div>
         </div>
 
         <!-- Grid de Cards Stat -->
@@ -97,60 +162,17 @@
           </div>
         </div>
 
-        <!-- Seção Minhas IAs & Criador de Sites -->
+        <!-- Seção Minhas IAs (Renderizada Dinamicamente) -->
         <div class="content-section">
           <div class="section-title-bar">
-            <h2>Suas IAs & Sites Ativos</h2>
+            <h2>Suas IAs</h2>
             <a href="#" class="link-btn">Ver todos</a>
           </div>
 
-          <div class="ai-cards-grid">
-            <div class="ai-card">
-              <div class="ai-card-top">
-                <div class="ai-icon-box">
-                  <i class="fi fi-rr-bot"></i>
-                </div>
-                <span class="status-badge status-online">Ativo</span>
-              </div>
-              <h3>Atendente Inteligente</h3>
-              <p>IA conectada ao site e WhatsApp para captação de leads e agendamentos automáticos.</p>
-              <div class="ai-card-meta">
-                <span><i class="fi fi-rr-interactive"></i> 1.420 interações</span>
-                <span><i class="fi fi-rr-globe"></i> meudominio.com</span>
-              </div>
-              <div class="ai-card-actions">
-                <button class="btn-secondary">Editar IA</button>
-                <button class="btn-outline"><i class="fi fi-rr-settings-sliders"></i></button>
-              </div>
-            </div>
-
-            <div class="ai-card">
-              <div class="ai-card-top">
-                <div class="ai-icon-box accent-purple">
-                  <i class="fi fi-rr-shopping-cart"></i>
-                </div>
-                <span class="status-badge status-online">Ativo</span>
-              </div>
-              <h3>E-Commerce Copilot</h3>
-              <p>Recomenda produtos aos visitantes do site em tempo real com algoritmo próprio.</p>
-              <div class="ai-card-meta">
-                <span><i class="fi fi-rr-interactive"></i> 890 interações</span>
-                <span><i class="fi fi-rr-globe"></i> loja.com.mz</span>
-              </div>
-              <div class="ai-card-actions">
-                <button class="btn-secondary">Editar IA</button>
-                <button class="btn-outline"><i class="fi fi-rr-settings-sliders"></i></button>
-              </div>
-            </div>
-
-            <div class="ai-card new-ai-card">
-              <div class="new-ai-content">
-                <div class="add-icon">
-                  <i class="fi fi-rr-add"></i>
-                </div>
-                <h3>Criar Novo Agente de IA</h3>
-                <p>Construa um novo modelo de inteligência artificial personalizado para o seu site.</p>
-              </div>
+          <!-- Gred dinâmica vazia inicialmente para receber os dados reais do Firebase -->
+          <div class="ai-cards-grid" id="aiCardsGrid">
+            <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--text-muted);">
+              Carregando as suas inteligências artificiais...
             </div>
           </div>
         </div>
