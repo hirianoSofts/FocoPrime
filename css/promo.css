@@ -2,7 +2,8 @@
    BARRA PROMOCIONAL
    ========================================================================== */
 .promo-bar {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: #1D1D1D;
+  bacgkground: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   color: #ffffff;
   padding: 10px 24px;
   display: flex;
