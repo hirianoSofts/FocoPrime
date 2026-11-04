@@ -1,0 +1,16 @@
+{
+  "name": "FocoPrime",
+  "short_name": "FocoPrime",
+  "description": "O futuro da inteligência acessível para todos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#08a9e8",
+  "icons": [
+    {
+      "src": "/assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
