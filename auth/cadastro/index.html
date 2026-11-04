@@ -9,9 +9,347 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../auth/style.css">
+    <style>
+        /* ==========================================================================
+           CONFIGURAÇÕES GERAIS E TEMA (CADASTRO / AUTENTICAÇÃO)
+           ========================================================================== */
+        :root {
+          --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --bg-auth: #ffffff;
+          --text-main: #111827;
+          --text-muted: #6b7280;
+          --border-color: #d1d5db;
+          --border-focus: #111827;
+          --primary-btn: #000000;
+          --primary-btn-hover: #262626;
+          --link-color: #2563eb;
+          --step-active: #3b82f6;
+          --step-inactive: #e5e7eb;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body.auth-body {
+          background-color: var(--bg-auth);
+          font-family: var(--font-family);
+          color: var(--text-main);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 20px;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container Centralizado */
+        .auth-container {
+          width: 100%;
+          max-width: 440px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        /* Logotipo */
+        .auth-logo-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+
+        .auth-logo {
+          height: 38px;
+          object-fit: contain;
+        }
+
+        /* Botão Voltar */
+        .auth-back-btn {
+          align-self: flex-start;
+          background: none;
+          border: none;
+          color: var(--text-muted);
+          font-family: var(--font-family);
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 16px;
+          transition: color 0.2s;
+        }
+
+        .auth-back-btn:hover {
+          color: var(--text-main);
+        }
+
+        .auth-back-btn.hidden {
+          display: none;
+        }
+
+        /* Indicador de Passos (Step Indicator) */
+        .step-indicator {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 24px;
+        }
+
+        .step-pill {
+          width: 6px;
+          height: 6px;
+          border-radius: 9999px;
+          background-color: var(--step-inactive);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .step-pill.active {
+          width: 28px;
+          background-color: var(--step-active);
+        }
+
+        /* Formulário e Passos */
+        .auth-form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .wizard-step {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .wizard-step.active {
+          display: flex;
+          animation: fadeInStep 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInStep {
+          from {
+            opacity: 0;
+            transform: translateY(6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        /* Títulos */
+        .auth-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--text-main);
+          letter-spacing: -0.02em;
+          margin-bottom: 2px;
+        }
+
+        .auth-subtitle {
+          font-size: 0.92rem;
+          color: var(--text-muted);
+          margin-bottom: 8px;
+        }
+
+        /* Campos de Input */
+        .auth-input-group {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+          width: 100%;
+        }
+
+        .auth-input-group label {
+          font-size: 0.88rem;
+          color: #4b5563;
+          font-weight: 500;
+        }
+
+        .auth-input-group input {
+          width: 100%;
+          padding: 14px 16px;
+          font-size: 0.98rem;
+          font-family: var(--font-family);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          outline: none;
+          color: var(--text-main);
+          background-color: #ffffff;
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-input-group input::placeholder {
+          color: #9ca3af;
+        }
+
+        .auth-input-group input:focus {
+          border-color: var(--border-focus);
+          box-shadow: 0 0 0 1px var(--border-focus);
+        }
+
+        .auth-row-inputs {
+          display: flex;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .auth-row-inputs .auth-input-group {
+          flex: 1;
+        }
+
+        /* Botões */
+        .auth-btn-primary {
+          position: relative;
+          width: 100%;
+          padding: 15px;
+          background-color: var(--primary-btn);
+          color: #ffffff;
+          border: none;
+          border-radius: 9999px;
+          font-family: var(--font-family);
+          font-size: 0.98rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background-color 0.2s, transform 0.1s;
+          margin-top: 4px;
+        }
+
+        .auth-btn-primary:hover {
+          background-color: var(--primary-btn-hover);
+        }
+
+        .auth-btn-primary:disabled {
+          opacity: 0.85;
+          cursor: not-allowed;
+        }
+
+        /* Estado de Loading Giratório no Botão (Sem Texto) */
+        .auth-btn-primary.loading {
+          color: transparent !important;
+          pointer-events: none;
+        }
+
+        .auth-btn-primary.loading::after {
+          content: "";
+          position: absolute;
+          width: 22px;
+          height: 22px;
+          top: 50%;
+          left: 50%;
+          margin-left: -11px;
+          margin-top: -11px;
+          border: 2.5px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #ffffff;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        .auth-btn-social.loading {
+          color: transparent !important;
+          pointer-events: none;
+        }
+
+        .auth-btn-social.loading svg {
+          display: none;
+        }
+
+        .auth-btn-social.loading::after {
+          content: "";
+          position: absolute;
+          width: 22px;
+          height: 22px;
+          top: 50%;
+          left: 50%;
+          margin-left: -11px;
+          margin-top: -11px;
+          border: 2.5px solid rgba(0, 0, 0, 0.2);
+          border-top-color: #111827;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        .auth-divider {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          margin: 6px 0;
+          color: #9ca3af;
+          font-size: 0.85rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+          content: '';
+          flex: 1;
+          border-bottom: 1px solid #e5e7eb;
+        }
+
+        .auth-divider span {
+          padding: 0 10px;
+        }
+
+        .auth-btn-social {
+          position: relative;
+          width: 100%;
+          padding: 13px 16px;
+          background-color: #ffffff;
+          color: var(--text-main);
+          border: 1px solid var(--border-color);
+          border-radius: 9999px;
+          font-family: var(--font-family);
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .auth-btn-social:hover {
+          background-color: #f9fafb;
+          border-color: #9ca3af;
+        }
+
+        /* Termos e Rodapé */
+        .auth-terms {
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          line-height: 1.4;
+          text-align: left;
+          margin: 4px 0;
+        }
+
+        .auth-link {
+          color: var(--link-color);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .auth-link:hover {
+          text-decoration: underline;
+        }
+
+        .auth-footer-text {
+          margin-top: 28px;
+          font-size: 0.92rem;
+        }
+    </style>
 </head>
 <body class="auth-body">
 
@@ -32,19 +370,6 @@
             <span class="step-pill active" id="stepPill1"></span>
             <span class="step-pill" id="stepPill2"></span>
             <span class="step-pill" id="stepPill3"></span>
-        </div>
-
-        <!-- Overlay / Modal de Progresso de Processamento -->
-        <div class="processing-overlay" id="processingOverlay">
-            <div class="processing-card">
-                <div class="processing-spinner"></div>
-                <h3 id="processingTitle">Criando sua conta...</h3>
-                <p id="processingSubtitle">Configurando seu ambiente no FocoPrime</p>
-                <div class="processing-progress-bar">
-                    <div class="processing-progress-fill" id="processingProgressFill"></div>
-                </div>
-                <span class="processing-percentage" id="processingPercentage">0%</span>
-            </div>
         </div>
 
         <form id="signupForm" class="auth-form">
@@ -127,7 +452,7 @@
         <p class="auth-subtitle auth-footer-text">Já tem uma conta? <a href="../login/index.html" class="auth-link">Entrar</a></p>
     </div>
 
-    <!-- Script com Firebase Real e Barra de Progresso Animada -->
+    <!-- Script com Firebase Real e Spinner no Botão -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -165,12 +490,8 @@
         const backBtn = document.getElementById('backBtn');
         const btnNext1 = document.getElementById('btnNext1');
         const btnNext2 = document.getElementById('btnNext2');
-        
-        const processingOverlay = document.getElementById('processingOverlay');
-        const processingTitle = document.getElementById('processingTitle');
-        const processingSubtitle = document.getElementById('processingSubtitle');
-        const processingProgressFill = document.getElementById('processingProgressFill');
-        const processingPercentage = document.getElementById('processingPercentage');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnGoogle = document.getElementById('btnGoogle');
 
         function updateStep(step) {
             currentStep = step;
@@ -230,33 +551,6 @@
             }
         });
 
-        // Função para animar a barra de progresso do processamento
-        function runProgressAnimation(targetPercent, duration, titleText, subtitleText) {
-            return new Promise((resolve) => {
-                if (titleText) processingTitle.textContent = titleText;
-                if (subtitleText) processingSubtitle.textContent = subtitleText;
-
-                let currentPercent = parseInt(processingProgressFill.style.width) || 0;
-                let startTime = null;
-
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    let progress = timestamp - startTime;
-                    let current = Math.min(currentPercent + (targetPercent - currentPercent) * (progress / duration), targetPercent);
-                    
-                    processingProgressFill.style.width = current + '%';
-                    processingPercentage.textContent = Math.round(current) + '%';
-
-                    if (progress < duration && current < targetPercent) {
-                        requestAnimationFrame(step);
-                    } else {
-                        resolve();
-                    }
-                }
-                requestAnimationFrame(step);
-            });
-        }
-
         // Submissão real do formulário (Firebase Auth + Realtime Database)
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -268,20 +562,12 @@
             const lastName = document.getElementById('lastNameInput').value.trim();
             const organization = document.getElementById('orgInput').value.trim();
 
-            // Exibe overlay de progresso
-            processingOverlay.classList.add('active');
-            processingProgressFill.style.width = '0%';
-            processingPercentage.textContent = '0%';
+            btnSubmit.classList.add('loading');
+            btnSubmit.disabled = true;
 
             try {
-                // Progresso 1: Autenticando no Firebase Auth (30%)
-                await runProgressAnimation(30, 400, 'Autenticando...', 'Criando credenciais no Firebase Auth');
-                
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-
-                // Progresso 2: Gravando perfil no Realtime Database (75%)
-                await runProgressAnimation(75, 500, 'Salvando dados...', 'Salvando perfil no Realtime Database');
 
                 const displayName = `${firstName} ${lastName}`.trim() || username;
                 
@@ -293,44 +579,33 @@
                     lastName: lastName,
                     displayName: displayName,
                     organization: organization,
-                    plan: 'Pessoal · Gratuito',
+                    plan: 'Pendente',
                     credits: 250,
                     createdAt: new Date().toISOString()
                 };
 
                 await set(ref(db, 'users/' + user.uid), userData);
-
-                // Progresso 3: Finalizando e Redirecionando (100%)
-                await runProgressAnimation(100, 300, 'Concluído!', 'Redirecionando para o FocoPrime');
-
-                // Salva também no localStorage para sessão rápida da UI
                 localStorage.setItem('focoai_user', JSON.stringify(userData));
 
-                setTimeout(() => {
-                    window.location.href = '../../index.html';
-                }, 400);
+                window.location.href = '../../planos/index.html';
 
             } catch (error) {
                 console.error(error);
-                processingOverlay.classList.remove('active');
+                btnSubmit.classList.remove('loading');
+                btnSubmit.disabled = false;
                 alert('Erro ao criar conta: ' + error.message);
             }
         });
 
         // Cadastro Social com Google
-        const btnGoogle = document.getElementById('btnGoogle');
         btnGoogle.addEventListener('click', async () => {
-            processingOverlay.classList.add('active');
-            processingProgressFill.style.width = '0%';
-            processingPercentage.textContent = '0%';
+            btnGoogle.classList.add('loading');
+            btnGoogle.disabled = true;
 
             try {
-                await runProgressAnimation(40, 400, 'Conectando ao Google...', 'Autenticando conta Google');
                 const provider = new GoogleAuthProvider();
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-
-                await runProgressAnimation(80, 500, 'Salvando dados...', 'Sincronizando perfil com o banco de dados');
 
                 const defaultUsername = user.email ? user.email.split('@')[0] : 'usuario';
                 const displayName = user.displayName || defaultUsername;
@@ -341,22 +616,20 @@
                     username: defaultUsername,
                     displayName: displayName,
                     photoURL: user.photoURL || '',
-                    plan: 'Pessoal · Gratuito',
+                    plan: 'Pendente',
                     credits: 250,
                     createdAt: new Date().toISOString()
                 };
 
                 await set(ref(db, 'users/' + user.uid), userData);
-                await runProgressAnimation(100, 300, 'Pronto!', 'Tudo configurado com sucesso');
-
                 localStorage.setItem('focoai_user', JSON.stringify(userData));
-                setTimeout(() => {
-                    window.location.href = '../../index.html';
-                }, 400);
+
+                window.location.href = '../../planos/index.html';
 
             } catch (error) {
                 console.error(error);
-                processingOverlay.classList.remove('active');
+                btnGoogle.classList.remove('loading');
+                btnGoogle.disabled = false;
                 alert('Erro no login com Google: ' + error.message);
             }
         });
