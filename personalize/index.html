@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocoPrime - Personalização e Controlo da IA</title>
+  
+  <!-- Fontes & Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../css/promo.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container" id="appContainer">
+    <main class="main-content" id="mainContent">
+      <div class="personalize-container">
+        
+        <div class="welcome-header">
+          <div>
+            <h1>Personalizar e Controlar IA ⚙️</h1>
+            <p id="subtitleSlug">Gerencie as configurações, prompt do sistema e visualize o seu assistente.</p>
+          </div>
+          <div class="header-actions">
+            <a id="btnViewLive" href="#" target="_blank" class="btn-secondary btn-action hidden">
+              <i class="fi fi-rr-globe"></i> Ver Site ao Vivo
+            </a>
+            <a href="../index.html" class="btn-secondary btn-back">
+              <i class="fi fi-rr-arrow-left"></i> Dashboard
+            </a>
+          </div>
+        </div>
+
+        <!-- Skeleton Loader Inicial -->
+        <div id="pageSkeleton" class="page-skeleton">
+          <div class="skeleton-line lg"></div>
+          <div class="skeleton-line md"></div>
+          <div class="skeleton-line sm"></div>
+        </div>
+
+        <form id="personalizeForm" class="hidden">
+          
+          <!-- Seção de Ações Rápidas & Status -->
+          <div class="form-section-card status-card">
+            <div class="status-info">
+              <h3>Status do Assistente</h3>
+              <p>O seu agente está ativo e pronto para responder no endereço: <strong id="fullUrlText">...</strong></p>
+            </div>
+            <button type="button" id="btnCopyLink" class="btn-secondary">
+              <i class="fi fi-rr-copy"></i> Copiar Link
+            </button>
+          </div>
+
+          <!-- Seção 1: Informações Básicas & Aparência -->
+          <div class="form-section-card">
+            <h2>1. Identidade e Apresentação</h2>
+            <p>Atualize as informações visuais e de identificação do agente.</p>
+            
+            <div class="input-row">
+              <div class="input-group">
+                <label for="aiName">Nome da IA *</label>
+                <input type="text" id="aiName" required>
+              </div>
+
+              <div class="input-group">
+                <label for="aiSlugDisplay">Endereço do site (URL)</label>
+                <div class="slug-input-wrapper disabled">
+                  <input type="text" id="aiSlugDisplay" disabled>
+                  <span class="slug-suffix">.focoprime.online</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="aiDescription">Descrição Curta</label>
+              <input type="text" id="aiDescription">
+            </div>
+
+            <!-- Logótipo com Prévia & Skeleton -->
+            <div class="input-group">
+              <label for="aiLogoUrl">URL do Logótipo (Ícone)</label>
+              <div class="logo-preview-wrapper">
+                <input type="url" id="aiLogoUrl">
+                <div class="avatar-preview-container" id="avatarContainer">
+                  <div id="avatarSkeleton" class="avatar-skeleton hidden"></div>
+                  <img id="avatarPreview" src="" alt="Prévia" class="avatar-img hidden">
+                  <div id="avatarPlaceholder" class="avatar-placeholder">
+                    <i class="fi fi-rr-picture"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cor do Tema Profissional com Presets -->
+            <div class="input-group">
+              <label>Cor do Tema Principal</label>
+              <div class="theme-picker-container">
+                <div class="theme-presets">
+                  <button type="button" class="color-preset" data-color="#6366f1" style="background: #6366f1;"></button>
+                  <button type="button" class="color-preset" data-color="#06b6d4" style="background: #06b6d4;"></button>
+                  <button type="button" class="color-preset" data-color="#10b981" style="background: #10b981;"></button>
+                  <button type="button" class="color-preset" data-color="#f59e0b" style="background: #f59e0b;"></button>
+                  <button type="button" class="color-preset" data-color="#ec4899" style="background: #ec4899;"></button>
+                  <button type="button" class="color-preset" data-color="#0f172a" style="background: #0f172a;"></button>
+                </div>
+                <div class="custom-color-input">
+                  <input type="color" id="aiThemeColor">
+                  <span id="hexValue">#6366F1</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Template Visual -->
+            <div class="input-group" style="margin-top: 16px;">
+              <label>Template Visual do Chat</label>
+              <div class="templates-grid" id="templatesGrid">
+                <div class="template-card" data-template="modern">Moderno (Flutuante)</div>
+                <div class="template-card" data-template="minimal">Minimalista</div>
+                <div class="template-card" data-template="fullscreen">Tela Cheia (Landing Page)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção 2: Cérebro & Modelos -->
+          <div class="form-section-card">
+            <h2>2. Cérebro & Motor de IA</h2>
+            <p>Selecione o motor de inteligência artificial responsável pelo processamento.</p>
+            
+            <div class="models-grid">
+              <label class="model-card" data-model="foco-wanga-3.0">
+                <input type="radio" name="aiModel" value="foco-wanga-3.0">
+                <div class="model-info">
+                  <h4>Foco Wanga 3.0 <span class="pro-badge">PRO</span></h4>
+                  <p>Modelo topo de linha otimizado para mercado local e alta precisão.</p>
+                </div>
+              </label>
+
+              <label class="model-card" data-model="llama-3-70b">
+                <input type="radio" name="aiModel" value="llama-3-70b">
+                <div class="model-info">
+                  <h4>Llama 3 70B</h4>
+                  <p>Altamente inteligente, ideal para raciocínio complexo e suporte técnico.</p>
+                </div>
+              </label>
+
+              <label class="model-card" data-model="mixtral-8x7b">
+                <input type="radio" name="aiModel" value="mixtral-8x7b">
+                <div class="model-info">
+                  <h4>Mixtral 8x7B</h4>
+                  <p>Rápido e eficiente para respostas de e-commerce e vendas em massa.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Seção 3: Personalidade & Instruções -->
+          <div class="form-section-card">
+            <h2>3. Personalidade e Instruções</h2>
+            <p>Configure as diretrizes de comportamento e a mensagem de boas-vindas.</p>
+
+            <div class="input-group">
+              <label for="aiSystemPrompt">Instruções do Sistema (System Prompt) *</label>
+              <textarea id="aiSystemPrompt" required></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="aiWelcomeMessage">Mensagem de Boas-Vindas no Chat</label>
+              <input type="text" id="aiWelcomeMessage">
+            </div>
+          </div>
+
+          <div class="btn-submit-container">
+            <button type="button" id="btnDeleteAi" class="btn-danger">
+              <i class="fi fi-rr-trash"></i> Eliminar IA
+            </button>
+            <button type="submit" class="btn-primary" id="btnSaveAi">
+              <i class="fi fi-rr-disk"></i> Salvar Alterações
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
