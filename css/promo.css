@@ -1,8 +1,8 @@
 /* ==========================================================================
-   BARRA PROMOCIONAL
+   BARRA PROMOCIONAL (Gradiente Centralizado)
    ========================================================================== */
 .promo-bar {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #4f46e5 0%, #8F00FF 50%, #7c3aed 100%);
   color: #ffffff;
   padding: 10px 24px;
   display: flex;
