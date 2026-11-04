@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { renderSidebar, initSidebarListeners } from "../components/sidebar.js";
 import { renderHeader, initHeaderListeners } from "../components/header.js";
+import { renderUserAIs } from "../components/suasias.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwj0vcsUbdFDwFLt3xfOHCC--OhpF6nXs",
@@ -35,19 +36,16 @@ function injectAuthLoader() {
     document.body.appendChild(overlay);
 }
 
-// Injeta a Sidebar e o Header dinamicamente assim que o DOM carrega
 document.addEventListener('DOMContentLoaded', () => {
     const appContainer = document.getElementById('appContainer');
     const mainContent = document.getElementById('mainContent');
 
     if (appContainer) {
-        // Insere a sidebar no início do container principal
         appContainer.insertAdjacentHTML('afterbegin', renderSidebar());
         initSidebarListeners();
     }
 
     if (mainContent) {
-        // Insere o cabeçalho no início da tag main
         mainContent.insertAdjacentHTML('afterbegin', renderHeader());
         initHeaderListeners();
     }
@@ -58,26 +56,38 @@ onAuthStateChanged(auth, async (user) => {
         try {
             const userRef = ref(db, 'users/' + user.uid);
             const snapshot = await get(userRef);
+            
+            let userData;
             if (snapshot.exists()) {
-                const userData = snapshot.val();
-                localStorage.setItem('focoai_user', JSON.stringify(userData));
-                updateDashboardUI(userData);
+                userData = snapshot.val();
+                userData.uid = user.uid;
             } else {
-                const basicData = {
+                userData = {
+                    uid: user.uid,
                     email: user.email,
                     displayName: user.displayName || user.email.split('@')[0],
                     credits: 250,
                     plan: 'Pessoal · Gratuito'
                 };
-                updateDashboardUI(basicData);
             }
+            
+            localStorage.setItem('focoai_user', JSON.stringify(userData));
+            updateDashboardUI(userData);
+
+            // Carrega e renderiza as IAs criadas pelo usuário logado no Firebase
+            await renderUserAIs(user.uid);
+
         } catch (e) {
-            console.error(e);
+            console.error("Erro ao carregar dados do usuário:", e);
         }
     } else {
         const cachedUser = localStorage.getItem('focoai_user');
         if (cachedUser) {
-            updateDashboardUI(JSON.parse(cachedUser));
+            const userData = JSON.parse(cachedUser);
+            updateDashboardUI(userData);
+            if (userData.uid) {
+                await renderUserAIs(userData.uid);
+            }
         } else {
             injectAuthLoader();
             setTimeout(() => {
@@ -96,12 +106,33 @@ function updateDashboardUI(userData) {
 
     const firstName = userData.firstName || userData.displayName?.split(' ')[0] || userData.email?.split('@')[0] || 'Usuário';
 
-    if (welcomeTitle) welcomeTitle.innerHTML = `Olá, ${firstName}👋`;
+    if (welcomeTitle) welcomeTitle.innerHTML = `Olá, ${firstName} 👋`;
     if (profileInitial) profileInitial.textContent = firstName.charAt(0).toUpperCase();
     if (popoverName) popoverName.textContent = userData.displayName || userData.username || 'FocoPrime User';
     if (popoverEmail) popoverEmail.textContent = userData.email || '';
     if (creditsBadge) creditsBadge.textContent = userData.credits !== undefined ? userData.credits : 250;
+
+    // Transição moderna do Skeleton para o Conteúdo Real (Textos + Botão)
+    const welcomeSkeleton = document.getElementById('welcomeSkeleton');
+    const welcomeRealContent = document.getElementById('welcomeRealContent');
+    const welcomeBtnSkeleton = document.getElementById('welcomeBtnSkeleton');
+    const welcomeActionBtn = document.getElementById('welcomeActionBtn');
+    
+    if (welcomeSkeleton && welcomeRealContent && !welcomeRealContent.classList.contains('loaded')) {
+        welcomeSkeleton.classList.add('fade-out');
+        if (welcomeBtnSkeleton) welcomeBtnSkeleton.classList.add('fade-out');
+
+        setTimeout(() => {
+            welcomeSkeleton.style.display = 'none';
+            if (welcomeBtnSkeleton) welcomeBtnSkeleton.style.display = 'none';
+            
+            welcomeRealContent.classList.add('loaded');
+            if (welcomeActionBtn) welcomeActionBtn.classList.add('loaded');
+        }, 300);
+    }
 }
+
+
 
 window.handleLogout = async function() {
     try {
