@@ -10,9 +10,322 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../../style.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================================================
+           CONFIGURAÇÕES GERAIS E TEMA (LOGIN E CADASTRO)
+           ========================================================================== */
+        :root {
+          --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --bg-auth: #ffffff;
+          --text-main: #111827;
+          --text-muted: #6b7280;
+          --border-color: #d1d5db;
+          --border-focus: #111827;
+          --primary-btn: #000000;
+          --primary-btn-hover: #262626;
+          --link-color: #2563eb;
+          --step-active: #3b82f6;
+          --step-inactive: #e5e7eb;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        /* Força a fonte DM Sans em toda a árvore do documento */
+        body.auth-body, 
+        body.auth-body input, 
+        body.auth-body button, 
+        body.auth-body select, 
+        body.auth-body textarea {
+          font-family: var(--font-family) !important;
+        }
+
+        body.auth-body {
+          background-color: var(--bg-auth);
+          color: var(--text-main);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 20px;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container Centralizado */
+        .auth-container {
+          width: 100%;
+          max-width: 440px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        /* Logotipo */
+        .auth-logo-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+
+        .auth-logo {
+          height: 38px;
+          object-fit: contain;
+        }
+
+        /* Formulário */
+        .auth-form {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        /* Títulos */
+        .auth-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--text-main);
+          letter-spacing: -0.02em;
+          margin-bottom: 2px;
+        }
+
+        .auth-subtitle {
+          font-size: 0.92rem;
+          color: var(--text-muted);
+          margin-bottom: 8px;
+        }
+
+        /* Campos de Input */
+        .auth-input-group {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+          width: 100%;
+        }
+
+        .auth-input-group label {
+          font-size: 0.88rem;
+          color: #4b5563;
+          font-weight: 500;
+        }
+
+        .auth-input-group input {
+          width: 100%;
+          padding: 14px 16px;
+          font-size: 0.98rem;
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          outline: none;
+          color: var(--text-main);
+          background-color: #ffffff;
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-input-group input::placeholder {
+          color: #9ca3af;
+        }
+
+        .auth-input-group input:focus {
+          border-color: var(--border-focus);
+          box-shadow: 0 0 0 1px var(--border-focus);
+        }
+
+        /* Botões */
+        .auth-btn-primary {
+          position: relative;
+          width: 100%;
+          padding: 15px;
+          background-color: var(--primary-btn);
+          color: #ffffff;
+          border: none;
+          border-radius: 9999px;
+          font-size: 0.98rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background-color 0.2s, transform 0.1s;
+          margin-top: 4px;
+        }
+
+        .auth-btn-primary:hover {
+          background-color: var(--primary-btn-hover);
+        }
+
+        .auth-btn-primary:disabled {
+          opacity: 0.85;
+          cursor: not-allowed;
+        }
+
+        /* Estado de Loading Giratório no Botão (Sem Texto) */
+        .auth-btn-primary.loading {
+          color: transparent !important;
+          pointer-events: none;
+        }
+
+        .auth-btn-primary.loading::after {
+          content: "";
+          position: absolute;
+          width: 22px;
+          height: 22px;
+          top: 50%;
+          left: 50%;
+          margin-left: -11px;
+          margin-top: -11px;
+          border: 2.5px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #ffffff;
+          border-radius: 50%;
+          animation: spinBtn 0.8s linear infinite;
+        }
+
+        .auth-btn-social.loading {
+          color: transparent !important;
+          pointer-events: none;
+        }
+
+        .auth-btn-social.loading svg {
+          display: none;
+        }
+
+        .auth-btn-social.loading::after {
+          content: "";
+          position: absolute;
+          width: 22px;
+          height: 22px;
+          top: 50%;
+          left: 50%;
+          margin-left: -11px;
+          margin-top: -11px;
+          border: 2.5px solid rgba(0, 0, 0, 0.2);
+          border-top-color: #111827;
+          border-radius: 50%;
+          animation: spinBtn 0.8s linear infinite;
+        }
+
+        @keyframes spinBtn {
+          to { transform: rotate(360deg); }
+        }
+
+        .auth-divider {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          margin: 6px 0;
+          color: #9ca3af;
+          font-size: 0.85rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+          content: '';
+          flex: 1;
+          border-bottom: 1px solid #e5e7eb;
+        }
+
+        .auth-divider span {
+          padding: 0 10px;
+        }
+
+        .auth-btn-social {
+          position: relative;
+          width: 100%;
+          padding: 13px 16px;
+          background-color: #ffffff;
+          color: var(--text-main);
+          border: 1px solid var(--border-color);
+          border-radius: 9999px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .auth-btn-social:hover {
+          background-color: #f9fafb;
+          border-color: #9ca3af;
+        }
+
+        /* Termos e Rodapé */
+        .auth-terms {
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          line-height: 1.4;
+          text-align: left;
+          margin: 4px 0;
+        }
+
+        .auth-link {
+          color: var(--link-color);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .auth-link:hover {
+          text-decoration: underline;
+        }
+
+        /* Campo de Senha com Ícone de Mostrar/Ocultar e Esqueceu a Senha */
+        .auth-password-wrapper {
+          position: relative;
+          width: 100%;
+        }
+
+        .auth-password-wrapper input {
+          width: 100%;
+          padding-right: 48px;
+        }
+
+        .auth-toggle-password {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #6b7280;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+          transition: color 0.2s;
+        }
+
+        .auth-toggle-password:hover {
+          color: #111827;
+        }
+
+        .hidden-icon {
+          display: none !important;
+        }
+
+        .auth-forgot-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 6px;
+        }
+
+        .auth-forgot-wrapper a {
+          font-size: 0.85rem;
+          color: #6b7280;
+          font-weight: 500;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+
+        .auth-forgot-wrapper a:hover {
+          color: #111827;
+          text-decoration: underline;
+        }
+    </style>
 </head>
 <body class="auth-body">
 
@@ -22,21 +335,8 @@
             <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x36/6366f1/ffffff?text=FocoPrime'">
         </div>
 
-        <h1 class="auth-title">Bem-vindo ao FocoPrime</h1>
+        <h1 class="auth-title">Bem-vindo de Volta</h1>
         <p class="auth-subtitle">Não tem uma conta? <a href="../cadastro/index.html" class="auth-link">Cadastre-se grátis</a></p>
-
-        <!-- Overlay / Modal de Progresso de Processamento -->
-        <div class="processing-overlay" id="processingOverlay">
-            <div class="processing-card">
-                <div class="processing-spinner"></div>
-                <h3 id="processingTitle">Entrando na sua conta...</h3>
-                <p id="processingSubtitle">Verificando credenciais no Firebase</p>
-                <div class="processing-progress-bar">
-                    <div class="processing-progress-fill" id="processingProgressFill"></div>
-                </div>
-                <span class="processing-percentage" id="processingPercentage">0%</span>
-            </div>
-        </div>
 
         <form class="auth-form" id="loginForm">
             <div class="auth-input-group">
@@ -46,7 +346,19 @@
             
             <div class="auth-input-group">
                 <label for="passwordInput">Senha</label>
-                <input type="password" id="passwordInput" placeholder="Sua senha" required>
+                <div class="auth-password-wrapper">
+                    <input type="password" id="passwordInput" placeholder="Sua senha" required>
+                    <button type="button" class="auth-toggle-password" id="togglePasswordBtn" aria-label="Mostrar senha">
+                        <!-- Ícone de Olho Fechado (Oculto por padrão) -->
+                        <svg id="eyeClosedIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        <!-- Ícone de Olho Aberto -->
+                        <svg id="eyeOpenIcon" class="hidden-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+                <!-- Esqueceu a senha logo abaixo da barra de senha, alinhado à direita -->
+                <div class="auth-forgot-wrapper">
+                    <a href="#" id="forgotPasswordBtn" class="auth-link">Esqueceu a sua senha?</a>
+                </div>
             </div>
 
             <p class="auth-terms">
@@ -64,13 +376,9 @@
                 Continuar com o Google
             </button>
         </form>
-
-        <div class="auth-footer-link">
-            <a href="#" id="forgotPasswordBtn" class="auth-link">Esqueceu a senha?</a>
-        </div>
     </div>
 
-    <!-- Script com Firebase Real e Animação de Progresso -->
+    <!-- Script com Firebase Real e Spinner no Botão -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -96,56 +404,40 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        const processingOverlay = document.getElementById('processingOverlay');
-        const processingTitle = document.getElementById('processingTitle');
-        const processingSubtitle = document.getElementById('processingSubtitle');
-        const processingProgressFill = document.getElementById('processingProgressFill');
-        const processingPercentage = document.getElementById('processingPercentage');
+        // Funcionalidade de Mostrar/Ocultar Senha
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const passwordInput = document.getElementById('passwordInput');
+        const eyeClosedIcon = document.getElementById('eyeClosedIcon');
+        const eyeOpenIcon = document.getElementById('eyeOpenIcon');
 
-        // Função para animar a barra de progresso
-        function runProgressAnimation(targetPercent, duration, titleText, subtitleText) {
-            return new Promise((resolve) => {
-                if (titleText) processingTitle.textContent = titleText;
-                if (subtitleText) processingSubtitle.textContent = subtitleText;
+        togglePasswordBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            if (isPassword) {
+                eyeClosedIcon.classList.add('hidden-icon');
+                eyeOpenIcon.classList.remove('hidden-icon');
+            } else {
+                eyeClosedIcon.classList.remove('hidden-icon');
+                eyeOpenIcon.classList.add('hidden-icon');
+            }
+        });
 
-                let currentPercent = parseInt(processingProgressFill.style.width) || 0;
-                let startTime = null;
-
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    let progress = timestamp - startTime;
-                    let current = Math.min(currentPercent + (targetPercent - currentPercent) * (progress / duration), targetPercent);
-                    
-                    processingProgressFill.style.width = current + '%';
-                    processingPercentage.textContent = Math.round(current) + '%';
-
-                    if (progress < duration && current < targetPercent) {
-                        requestAnimationFrame(step);
-                    } else {
-                        resolve();
-                    }
-                }
-                requestAnimationFrame(step);
-            });
-        }
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnGoogle = document.getElementById('btnGoogle');
 
         // Submissão do Formulário de Login (E-mail ou Username + Senha)
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const loginInput = document.getElementById('loginInput').value.trim();
-            const password = document.getElementById('passwordInput').value;
+            const password = passwordInput.value;
 
-            processingOverlay.classList.add('active');
-            processingProgressFill.style.width = '0%';
-            processingPercentage.textContent = '0%';
+            btnSubmit.classList.add('loading');
+            btnSubmit.disabled = true;
 
             try {
-                await runProgressAnimation(25, 300, 'Verificando...', 'Localizando credenciais');
-
                 let email = loginInput;
 
-                // Se o usuário digitou um nome de usuário (sem @), buscamos o e-mail correspondente no Realtime Database
                 if (!loginInput.includes('@')) {
                     const usersRef = ref(db, 'users');
                     const userQuery = query(usersRef, orderByChild('username'), equalTo(loginInput));
@@ -160,12 +452,8 @@
                     email = userDataObj[userId].email;
                 }
 
-                await runProgressAnimation(60, 400, 'Autenticando...', 'Validando senha no Firebase Auth');
-                
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-
-                await runProgressAnimation(85, 400, 'Carregando perfil...', 'Buscando dados no Realtime Database');
 
                 const userRef = ref(db, 'users/' + user.uid);
                 const userSnapshot = await get(userRef);
@@ -184,36 +472,26 @@
                     };
                 }
 
-                await runProgressAnimation(100, 300, 'Sucesso!', 'Redirecionando para o FocoPrime');
-
-                // Salva a sessão no localStorage para leitura imediata na Dashboard
                 localStorage.setItem('focoai_user', JSON.stringify(userData));
-
-                setTimeout(() => {
-                    window.location.href = '../../index.html';
-                }, 400);
+                window.location.href = '../../index.html';
 
             } catch (error) {
                 console.error(error);
-                processingOverlay.classList.remove('active');
+                btnSubmit.classList.remove('loading');
+                btnSubmit.disabled = false;
                 alert('Erro ao entrar: ' + (error.code === 'auth/invalid-credential' ? 'E-mail, usuário ou senha incorretos.' : error.message));
             }
         });
 
         // Login Social com Google
-        const btnGoogle = document.getElementById('btnGoogle');
         btnGoogle.addEventListener('click', async () => {
-            processingOverlay.classList.add('active');
-            processingProgressFill.style.width = '0%';
-            processingPercentage.textContent = '0%';
+            btnGoogle.classList.add('loading');
+            btnGoogle.disabled = true;
 
             try {
-                await runProgressAnimation(40, 400, 'Conectando ao Google...', 'Autenticando conta Google');
                 const provider = new GoogleAuthProvider();
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-
-                await runProgressAnimation(80, 500, 'Carregando perfil...', 'Sincronizando dados com o banco');
 
                 const userRef = ref(db, 'users/' + user.uid);
                 const userSnapshot = await get(userRef);
@@ -233,21 +511,17 @@
                         credits: 250,
                         createdAt: new Date().toISOString()
                     };
-                    // Salva se for novo
                     const { set } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js");
                     await set(userRef, userData);
                 }
 
-                await runProgressAnimation(100, 300, 'Pronto!', 'Tudo configurado com sucesso');
-
                 localStorage.setItem('focoai_user', JSON.stringify(userData));
-                setTimeout(() => {
-                    window.location.href = '../../index.html';
-                }, 400);
+                window.location.href = '../../index.html';
 
             } catch (error) {
                 console.error(error);
-                processingOverlay.classList.remove('active');
+                btnGoogle.classList.remove('loading');
+                btnGoogle.disabled = false;
                 alert('Erro no login com Google: ' + error.message);
             }
         });
