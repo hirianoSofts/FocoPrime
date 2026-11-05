@@ -5,10 +5,10 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#8F00FF",
+  "theme_color": "#08a9e8",
   "icons": [
     {
-      "src": "/assets/favicon.png",
+      "src": "/assets/favicon-new.png",
       "sizes": "512x512",
       "type": "image/png"
     }
