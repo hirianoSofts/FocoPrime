@@ -1,61 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-MZ">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#8F00FF">
+  <meta name="theme-color" content="#08a9e8">
   <meta name="color-scheme" content="light">
-  
-  <!-- SEO & Metatags principais (Otimizados e concisos) -->
-  <title>FocoPrime Dashboard — Gerencie os seus Agentes de IA</title>
-  <meta name="description" content="Painel de controlo da FocoPrime. Acompanhe métricas, gira os seus assistentes de inteligência artificial e configure a sua conta de forma simples.">
+  <title>FocoPrime — Crie a sua própria inteligência artificial</title>
+  <meta name="description" content="A FocoPrime torna a inteligência artificial mais acessível. Crie, personalize e prepare os seus próprios assistentes de IA numa plataforma simples e moderna.">
   <meta name="keywords" content="FocoPrime, inteligência artificial, criar IA, assistentes de IA, plataforma de IA, FocoAI, Moçambique">
   <meta name="author" content="FocoPrime">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="googlebot" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://dashboard.focoprime.online/">
-
-  <!-- Favicon & PWA Manifest -->
   <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/favicon.png">
   <link rel="manifest" href="/site.webmanifest">
-
-  <!-- Fontes & Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
-  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Folhas de Estilo -->
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="css/promo.css">
-  <link rel="stylesheet" href="css/upgradebtn.css">
-  <link rel="stylesheet" href="css/suasias.css">
-  <link rel="stylesheet" href="css/welcome.css">
-
-  <!-- Open Graph: Redes Sociais (WhatsApp, Facebook, LinkedIn) -->
+  <!-- Open Graph: pré-visualização em WhatsApp, Facebook, LinkedIn e outras plataformas -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_MZ">
   <meta property="og:site_name" content="FocoPrime">
-  <meta property="og:title" content="FocoPrime Dashboard — Gerencie os seus Agentes de IA">
-  <meta property="og:description" content="Painel de controlo da FocoPrime. Acompanhe métricas, gira os seus assistentes de inteligência artificial e configure a sua conta.">
+  <meta property="og:title" content="FocoPrime — Crie a sua própria inteligência artificial">
+  <meta property="og:description" content="Transforme as suas ideias em assistentes de inteligência artificial. Descubra uma forma mais acessível de criar com IA.">
   <meta property="og:url" content="https://dashboard.focoprime.online/">
   <meta property="og:image" content="https://dashboard.focoprime.online/assets/og-image.png">
   <meta property="og:image:secure_url" content="https://dashboard.focoprime.online/assets/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="FocoPrime Dashboard">
+  <meta property="og:image:alt" content="FocoPrime — Crie a sua própria inteligência artificial">
 
-  <!-- Twitter / X Cards -->
+  <!-- Twitter / X cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FocoPrime Dashboard — Gerencie os seus Agentes de IA">
-  <meta name="twitter:description" content="Painel de controlo da FocoPrime para gerir os seus assistentes de IA e métricas.">
+  <meta name="twitter:title" content="FocoPrime — Crie a sua própria inteligência artificial">
+  <meta name="twitter:description" content="Tecnologia acessível para transformar ideias em assistentes de inteligência artificial.">
   <meta name="twitter:image" content="https://dashboard.focoprime.online/assets/og-image.png">
-  <meta name="twitter:image:alt" content="FocoPrime Dashboard">
+  <meta name="twitter:image:alt" content="FocoPrime — Crie a sua própria inteligência artificial">
 
-  <!-- Dados Estruturados (Schema.org) -->
+  <!-- Dados estruturados para motores de busca -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -68,119 +54,125 @@
   </script>
 </head>
 <body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="FocoPrime - início">
+      <img src="/assets/logo.png" alt="" class="brand-mark">
+      <span>Foco<span class="brand-accent">Prime</span></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <nav class="nav" id="mainNav" aria-label="Navegação principal">
+      <a href="#plataforma">Plataforma</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#possibilidades">Possibilidades</a>
+      <a class="nav-cta" href="https://dashboard.focoprime.online/">Aceder à plataforma <span>↗</span></a>
+    </nav>
+  </header>
 
-  <!-- Container Principal com ID para receber a Sidebar -->
-  <div class="app-container" id="appContainer">
-
-    <!-- Conteúdo Principal (Sidebar e Cabeçalho injetados via JS) -->
-    <main class="main-content" id="mainContent">
-
-      <!-- Área de Conteúdo / Dashboard -->
-      <div class="dashboard-body">
-        
-        <!-- Header de Boas-vindas com Skeleton Dinâmico -->
-        <div class="welcome-header">
-          <div class="welcome-titles-container">
-            <!-- Skeleton Inicial -->
-            <div class="welcome-skeleton" id="welcomeSkeleton">
-              <div class="skeleton-welcome-title skeleton-shine"></div>
-              <div class="skeleton-welcome-subtitle skeleton-shine"></div>
-            </div>
-            
-            <!-- Conteúdo Real (Revelado com Transição Suave) -->
-            <div class="welcome-real-content" id="welcomeRealContent">
-              <h1 id="welcomeTitle">Olá, Carregando... 👋</h1>
-              <p>Aqui está o resumo dos seus sites, agentes de IA e métricas de desempenho.</p>
-            </div>
-          </div>
-          
-          <!-- Botão Principal com Skeleton / Transição Integrada -->
-          <div class="welcome-action-wrapper">
-            <div class="welcome-btn-skeleton skeleton-shine" id="welcomeBtnSkeleton"></div>
-            <button class="btn-primary" id="welcomeActionBtn">
-              <i class="fi fi-rr-plus"></i>
-              <span>Criar Uma Nova IA</span>
-            </button>
-          </div>
+  <main>
+    <section class="hero section-wrap" id="inicio">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> O futuro da inteligência acessível</div>
+        <h1>As suas ideias.<br><span class="gradient-text">A sua própria IA.</span></h1>
+        <p class="hero-lead">Crie, personalize e dê vida aos seus próprios assistentes de inteligência artificial. Tudo começa com uma ideia — a FocoPrime ajuda a levá-la mais longe.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://dashboard.focoprime.online/">Começar agora <span>↗</span></a>
+          <a class="button button-quiet" href="#como-funciona">Conhecer a FocoPrime <span>↓</span></a>
         </div>
-
-        <!-- Grid de Cards Stat -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Últimos 30 dias</span>
-            </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="124.500 MZN">124.500 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend trend-up">
-                <i class="fi fi-rr-stats"></i>
-                <span>Crescimento este mês</span>
-              </div>
-              <span class="stat-subtext">Comparado ao mês anterior</span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Ganhos Anuais</span>
-              <span class="badge-tag tag-danger">
-                <i class="fi fi-rr-arrow-small-down"></i> 0%
-              </span>
-            </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend">
-                <i class="fi fi-rr-stats"></i>
-                <span>Crescimento anual</span>
-              </div>
-              <span class="stat-subtext">Comparado ao ano anterior</span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Pagamentos Pendentes</span>
-              <span class="badge-tag tag-danger">
-                <i class="fi fi-rr-arrow-small-down"></i> -5%
-              </span>
-            </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend">
-                <i class="fi fi-rr-stats"></i>
-                <span>Redução em relação ao mês passado</span>
-              </div>
-              <span class="stat-subtext">Os pedidos aguardando pagamento</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Seção Minhas IAs (Renderizada Dinamicamente) -->
-        <div class="content-section">
-          <div class="section-title-bar">
-            <h2>Suas IAs</h2>
-            <a href="#" class="link-btn">Ver todos</a>
-          </div>
-
-          <!-- Grid dinâmica vazia inicialmente para receber os dados reais do Firebase -->
-          <div class="ai-cards-grid" id="aiCardsGrid">
-            <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--text-muted);">
-              Carregando as suas inteligências artificiais...
-            </div>
-          </div>
-        </div>
-
+        <div class="hero-note"><span class="check">✓</span> Uma experiência simples, flexível e feita para criar.</div>
       </div>
-    </main>
-  </div>
+      <div class="hero-art" aria-label="Identidade visual FocoPrime">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="glow"></div>
+        <div class="logo-card"><img src="/assets/logo.png" alt="Símbolo da FocoPrime"></div>
+        <div class="float-card float-top"><span class="float-icon">✦</span><span><b>Ideia em criação</b><small>O próximo passo começa aqui</small></span></div>
+        <div class="float-card float-bottom"><span class="status-dot"></span><span><b>Inteligência acessível</b><small>Feita para todos</small></span></div>
+        <div class="spark spark-a">✳</div><div class="spark spark-b">✦</div>
+      </div>
+    </section>
 
-  <!-- Script de Autenticação / Proteção de Rota -->
-  <script type="module" src="js/auth.js"></script>
+    <section class="trust-strip">
+      <div class="section-wrap trust-inner"><span>CRIATIVIDADE</span><i></i><span>TECNOLOGIA</span><i></i><span>ACESSIBILIDADE</span><i></i><span>POSSIBILIDADES</span></div>
+    </section>
+
+    <section class="section section-wrap" id="plataforma">
+      <div class="section-heading">
+        <span class="section-kicker">A plataforma</span>
+        <h2>Mais do que conversar com IA.<br><span class="muted">É construir com ela.</span></h2>
+        <p>A FocoPrime nasce para aproximar a inteligência artificial de pessoas, criadores e organizações. O objetivo é dar-lhe ferramentas para transformar uma necessidade numa experiência inteligente.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card feature-main">
+          <div class="feature-icon blue-icon">✦</div>
+          <h3>Crie os seus assistentes</h3>
+          <p>Imagine um assistente para estudar, trabalhar, responder a clientes ou apoiar um projecto. Dê-lhe um propósito e personalize a experiência.</p>
+          <span class="card-index">01 / CRIAR</span>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon violet-icon">⌘</div>
+          <h3>Personalize a experiência</h3>
+          <p>Defina a identidade, as instruções e a forma como cada assistente deve ajudar.</p>
+          <span class="card-index">02 / PERSONALIZAR</span>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon mint-icon">↗</div>
+          <h3>Leve as ideias mais longe</h3>
+          <p>Prepare soluções de IA para diferentes tarefas, projectos e necessidades do dia a dia.</p>
+          <span class="card-index">03 / EVOLUIR</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="workflow-section" id="como-funciona">
+      <div class="section-wrap workflow-layout">
+        <div class="section-heading align-left">
+          <span class="section-kicker">Como funciona</span>
+          <h2>Da ideia à<br><span class="gradient-text">inteligência.</span></h2>
+          <p>Não precisa de começar com um projecto complicado. Comece pelo que pretende resolver e construa a partir daí.</p>
+          <a class="text-link" href="https://dashboard.focoprime.online/">Explorar a plataforma <span>→</span></a>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-number">01</div><div><h3>Defina o propósito</h3><p>Escolha o que o seu assistente deve fazer e para quem será útil.</p></div></div>
+          <div class="step"><div class="step-number">02</div><div><h3>Configure a sua IA</h3><p>Personalize as instruções e os detalhes que tornam o assistente único.</p></div></div>
+          <div class="step"><div class="step-number">03</div><div><h3>Experimente e melhore</h3><p>Teste as respostas, ajuste o comportamento e refine a experiência.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-wrap possibilities" id="possibilidades">
+      <div class="section-heading">
+        <span class="section-kicker">Possibilidades</span>
+        <h2>Uma plataforma.<br><span class="muted">Muitas formas de criar.</span></h2>
+        <p>Use a inteligência artificial como ponto de partida para desenvolver novas formas de aprender, produzir e resolver problemas.</p>
+      </div>
+      <div class="use-grid">
+        <div class="use-item"><span>01</span><div><b>Educação</b><small>Apoio ao estudo e aprendizagem</small></div><em>↗</em></div>
+        <div class="use-item"><span>02</span><div><b>Negócios</b><small>Apoio a tarefas e atendimento</small></div><em>↗</em></div>
+        <div class="use-item"><span>03</span><div><b>Criatividade</b><small>Novas ideias e produção de conteúdo</small></div><em>↗</em></div>
+        <div class="use-item"><span>04</span><div><b>Projectos pessoais</b><small>Assistentes para as suas necessidades</small></div><em>↗</em></div>
+      </div>
+    </section>
+
+    <section class="closing section-wrap">
+      <div class="closing-panel">
+        <div class="closing-orb"></div>
+        <span class="section-kicker">O próximo passo é seu</span>
+        <h2>O futuro da inteligência<br>também pode começar consigo.</h2>
+        <p>Transforme uma ideia numa experiência inteligente com a FocoPrime.</p>
+        <a class="button button-white" href="https://dashboard.focoprime.online/">Entrar na FocoPrime <span>↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="section-wrap footer-main">
+      <a class="brand footer-brand" href="#inicio"><img src="/assets/logo.png" alt="" class="brand-mark"><span>Foco<span class="brand-accent">Prime</span></span></a>
+      <p>Desenvolver o futuro da inteligência acessível para todos.</p>
+      <a class="footer-link" href="https://dashboard.focoprime.online/">dashboard.focoprime.online ↗</a>
+    </div>
+    <div class="section-wrap footer-bottom"><span>© <span id="year"></span> FocoPrime. Todos os direitos reservados.</span><a href="#inicio">Voltar ao topo ↑</a></div>
+  </footer>
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
