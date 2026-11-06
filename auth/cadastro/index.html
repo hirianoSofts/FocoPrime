@@ -1,30 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocoPrime - Criar Conta</title>
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="color-scheme" content="light">
+    
+    <!-- SEO & Metatags -->
+    <title>FocoPrime Studio — Criar Conta</title>
+    <meta name="description" content="Crie sua conta gratuita na FocoPrime Studio e comece a construir, customizar e escalar experiências de inteligência artificial em tempo real.">
+    <meta name="keywords" content="FocoPrime, criar conta, cadastro, inteligência artificial, assistentes de IA, plataforma de IA">
+    <meta name="author" content="FocoPrime">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://dashboard.focoprime.online/auth/cadastro/">
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/favicon-new.png">
+    <link rel="apple-touch-icon" href="../../assets/favicon-new.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_MZ">
+    <meta property="og:site_name" content="FocoPrime">
+    <meta property="og:title" content="FocoPrime Studio — Crie a sua Conta Gratuita">
+    <meta property="og:description" content="Junte-se à FocoPrime e comece a criar assistentes de inteligência artificial de última geração em tempo real.">
+    <meta property="og:url" content="https://dashboard.focoprime.online/auth/cadastro/">
+    <meta property="og:image" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta property="og:image:secure_url" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="FocoPrime Studio - Criar Conta">
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FocoPrime Studio — Crie a sua Conta Gratuita">
+    <meta name="twitter:description" content="Junte-se à FocoPrime e crie assistentes inteligentes e APIs de IA em tempo real.">
+    <meta name="twitter:image" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta name="twitter:image:alt" content="FocoPrime Studio - Criar Conta">
+    
     <!-- Google Fonts: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
+    <!-- Flaticon UIcons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+    <!-- Custom CSS Alinhado ao Portfólio (Design Flat & Limpo) -->
     <style>
         /* ==========================================================================
-           CONFIGURAÇÕES GERAIS E TEMA (CADASTRO / AUTENTICAÇÃO)
+           VARIÁVEIS DE TEMA (PORTFÓLIO / DESIGN SYSTEM)
            ========================================================================== */
         :root {
-          --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          --bg-auth: #ffffff;
-          --text-main: #111827;
-          --text-muted: #6b7280;
-          --border-color: #d1d5db;
-          --border-focus: #111827;
-          --primary-btn: #000000;
-          --primary-btn-hover: #262626;
-          --link-color: #2563eb;
-          --step-active: #3b82f6;
-          --step-inactive: #e5e7eb;
+          --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          
+          --bg-app: #ffffff; /* Fundo limpo e continuo */
+          --bg-surface: #ffffff;
+          --bg-subtle: #f8fafc;
+          
+          --border-color: #e2e8f0;
+          --border-hover: #cbd5e1;
+          --border-focus: #4f46e5;
+          
+          --text-main: #0f172a;
+          --text-muted: #64748b;
+          --text-light: #94a3b8;
+          
+          --primary: #4f46e5;
+          --primary-hover: #4338ca;
+          
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-full: 9999px;
+          
+          --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -34,36 +88,41 @@
         }
 
         body.auth-body {
-          background-color: var(--bg-auth);
-          font-family: var(--font-family);
+          background-color: var(--bg-app);
+          font-family: var(--font-main);
           color: var(--text-main);
           display: flex;
           justify-content: center;
           align-items: center;
           min-height: 100vh;
-          padding: 20px;
+          padding: 32px 24px;
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Container Centralizado */
+        /* Container Principal Flat (Sem card, sem sombra, sem bordas externas) */
         .auth-container {
           width: 100%;
-          max-width: 440px;
+          max-width: 400px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          position: relative;
         }
 
         /* Logotipo */
         .auth-logo-wrapper {
           display: flex;
           justify-content: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .auth-logo {
-          height: 38px;
+          height: 32px;
           object-fit: contain;
         }
 
@@ -73,15 +132,15 @@
           background: none;
           border: none;
           color: var(--text-muted);
-          font-family: var(--font-family);
-          font-size: 0.95rem;
+          font-family: var(--font-main);
+          font-size: 0.9rem;
           font-weight: 500;
           cursor: pointer;
           display: flex;
           align-items: center;
           gap: 6px;
           margin-bottom: 16px;
-          transition: color 0.2s;
+          transition: var(--transition);
         }
 
         .auth-back-btn:hover {
@@ -104,14 +163,14 @@
         .step-pill {
           width: 6px;
           height: 6px;
-          border-radius: 9999px;
-          background-color: var(--step-inactive);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          border-radius: var(--radius-full);
+          background-color: var(--border-color);
+          transition: var(--transition);
         }
 
         .step-pill.active {
           width: 28px;
-          background-color: var(--step-active);
+          background-color: var(--primary);
         }
 
         /* Formulário e Passos */
@@ -131,7 +190,7 @@
 
         .wizard-step.active {
           display: flex;
-          animation: fadeInStep 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: fadeInStep 0.3s var(--transition) forwards;
         }
 
         @keyframes fadeInStep {
@@ -147,17 +206,21 @@
 
         /* Títulos */
         .auth-title {
-          font-size: 2rem;
+          font-size: 26px;
           font-weight: 700;
           color: var(--text-main);
           letter-spacing: -0.02em;
           margin-bottom: 2px;
+          text-align: left;
+          width: 100%;
         }
 
         .auth-subtitle {
-          font-size: 0.92rem;
+          font-size: 14px;
           color: var(--text-muted);
           margin-bottom: 8px;
+          text-align: left;
+          width: 100%;
         }
 
         /* Campos de Input */
@@ -170,31 +233,36 @@
         }
 
         .auth-input-group label {
-          font-size: 0.88rem;
-          color: #4b5563;
-          font-weight: 500;
+          font-size: 13px;
+          color: var(--text-main);
+          font-weight: 600;
         }
 
         .auth-input-group input {
           width: 100%;
-          padding: 14px 16px;
-          font-size: 0.98rem;
-          font-family: var(--font-family);
+          padding: 12px 14px;
+          font-size: 14px;
+          font-family: var(--font-main);
           border: 1px solid var(--border-color);
-          border-radius: 12px;
+          border-radius: var(--radius-sm);
           outline: none;
           color: var(--text-main);
           background-color: #ffffff;
-          transition: border-color 0.2s, box-shadow 0.2s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
         }
 
         .auth-input-group input::placeholder {
-          color: #9ca3af;
+          color: var(--text-light);
+        }
+
+        .auth-input-group input:hover {
+          border-color: var(--border-hover);
         }
 
         .auth-input-group input:focus {
           border-color: var(--border-focus);
-          box-shadow: 0 0 0 1px var(--border-focus);
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
         }
 
         .auth-row-inputs {
@@ -207,136 +275,127 @@
           flex: 1;
         }
 
-        /* Botões */
+        /* Botão Primário (Estilo Portfólio) */
         .auth-btn-primary {
           position: relative;
           width: 100%;
-          padding: 15px;
-          background-color: var(--primary-btn);
+          padding: 12px 20px;
+          background-color: var(--text-main);
           color: #ffffff;
           border: none;
-          border-radius: 9999px;
-          font-family: var(--font-family);
-          font-size: 0.98rem;
+          border-radius: var(--radius-sm);
+          font-family: var(--font-main);
+          font-size: 14px;
           font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.2s, transform 0.1s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
           margin-top: 4px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
         }
 
         .auth-btn-primary:hover {
-          background-color: var(--primary-btn-hover);
+          background-color: var(--primary);
         }
 
         .auth-btn-primary:disabled {
-          opacity: 0.85;
+          opacity: 0.7;
           cursor: not-allowed;
         }
 
-        /* Estado de Loading Giratório no Botão (Sem Texto) */
-        .auth-btn-primary.loading {
-          color: transparent !important;
-          pointer-events: none;
-        }
-
-        .auth-btn-primary.loading::after {
-          content: "";
-          position: absolute;
-          width: 22px;
-          height: 22px;
-          top: 50%;
-          left: 50%;
-          margin-left: -11px;
-          margin-top: -11px;
-          border: 2.5px solid rgba(255, 255, 255, 0.3);
-          border-top-color: #ffffff;
-          border-radius: 50%;
-          animation: spin 0.8s linear infinite;
-        }
-
+        /* Spinner de Loading */
+        .auth-btn-primary.loading,
         .auth-btn-social.loading {
           color: transparent !important;
           pointer-events: none;
         }
 
-        .auth-btn-social.loading svg {
-          display: none;
-        }
-
+        .auth-btn-primary.loading::after,
         .auth-btn-social.loading::after {
           content: "";
           position: absolute;
-          width: 22px;
-          height: 22px;
+          width: 20px;
+          height: 20px;
           top: 50%;
           left: 50%;
-          margin-left: -11px;
-          margin-top: -11px;
-          border: 2.5px solid rgba(0, 0, 0, 0.2);
-          border-top-color: #111827;
+          margin-left: -10px;
+          margin-top: -10px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #ffffff;
           border-radius: 50%;
           animation: spin 0.8s linear infinite;
+        }
+
+        .auth-btn-social.loading::after {
+          border-color: rgba(0, 0, 0, 0.2);
+          border-top-color: var(--text-main);
         }
 
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
 
+        /* Divisor */
         .auth-divider {
           display: flex;
           align-items: center;
           text-align: center;
-          margin: 6px 0;
-          color: #9ca3af;
-          font-size: 0.85rem;
+          margin: 8px 0;
+          color: var(--text-light);
+          font-size: 13px;
         }
 
         .auth-divider::before,
         .auth-divider::after {
           content: '';
           flex: 1;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid var(--border-color);
         }
 
         .auth-divider span {
           padding: 0 10px;
         }
 
+        /* Botão Social (Google) */
         .auth-btn-social {
           position: relative;
           width: 100%;
-          padding: 13px 16px;
+          padding: 12px 16px;
           background-color: #ffffff;
           color: var(--text-main);
           border: 1px solid var(--border-color);
-          border-radius: 9999px;
-          font-family: var(--font-family);
-          font-size: 0.95rem;
+          border-radius: var(--radius-sm);
+          font-family: var(--font-main);
+          font-size: 14px;
           font-weight: 500;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          transition: background-color 0.2s, border-color 0.2s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
         }
 
         .auth-btn-social:hover {
-          background-color: #f9fafb;
-          border-color: #9ca3af;
+          background-color: var(--bg-subtle);
+          border-color: var(--border-hover);
         }
 
         /* Termos e Rodapé */
         .auth-terms {
-          font-size: 0.75rem;
+          font-size: 12px;
           color: var(--text-muted);
-          line-height: 1.4;
+          line-height: 1.5;
           text-align: left;
           margin: 4px 0;
         }
 
         .auth-link {
-          color: var(--link-color);
+          color: var(--primary);
           text-decoration: none;
           font-weight: 500;
         }
@@ -346,8 +405,19 @@
         }
 
         .auth-footer-text {
-          margin-top: 28px;
-          font-size: 0.92rem;
+          margin-top: 24px;
+          font-size: 14px;
+          text-align: center;
+          width: 100%;
+        }
+        
+        /* Correção universal para ícones Flaticon (uicons) */
+        i[class^="fi-"], 
+        i[class*=" fi-"] {
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
     </style>
 </head>
@@ -356,16 +426,16 @@
     <div class="auth-container">
         <!-- Logotipo FocoPrime -->
         <div class="auth-logo-wrapper">
-            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x36/6366f1/ffffff?text=FocoPrime'">
+            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x32/4f46e5/ffffff?text=FocoPrime'">
         </div>
 
         <!-- Botão Voltar (Oculto na Etapa 1) -->
         <button type="button" class="auth-back-btn hidden" id="backBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <i class="fi fi-rr-arrow-left"></i>
             Voltar
         </button>
 
-        <!-- Indicador de Etapas (Step Indicator) -->
+        <!-- Indicador de Etapas -->
         <div class="step-indicator">
             <span class="step-pill active" id="stepPill1"></span>
             <span class="step-pill" id="stepPill2"></span>
@@ -381,10 +451,13 @@
 
                 <div class="auth-input-group">
                     <label for="emailInput">E-mail</label>
-                    <input type="email" id="emailInput" placeholder="Digite seu e-mail para começar" required>
+                    <input type="email" id="emailInput" placeholder="nome@exemplo.com" required>
                 </div>
 
-                <button type="button" class="auth-btn-primary" id="btnNext1">Continuar</button>
+                <button type="button" class="auth-btn-primary" id="btnNext1">
+                    <span>Continuar</span>
+                    <i class="fi fi-rr-arrow-right"></i>
+                </button>
 
                 <div class="auth-divider"><span>ou</span></div>
 
@@ -439,7 +512,7 @@
                 </div>
 
                 <p class="auth-terms">
-                    Ao clicar em "Criar conta", você concorda com nossos <a href="#" class="auth-link">Termos de Uso</a> e reconhece que leu e entendeu nossa <a href="#" class="auth-link">Política de Privacidade</a>.
+                    Ao clicar em "Criar conta", você concorda com nossos <a href="#" class="auth-link">Termos de Uso</a> e reconhece nossa <a href="#" class="auth-link">Política de Privacidade</a>.
                 </p>
 
                 <button type="submit" class="auth-btn-primary" id="btnSubmit">
@@ -452,7 +525,7 @@
         <p class="auth-subtitle auth-footer-text">Já tem uma conta? <a href="../login/index.html" class="auth-link">Entrar</a></p>
     </div>
 
-    <!-- Script com Firebase Real e Spinner no Botão -->
+    <!-- Script Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -551,7 +624,6 @@
             }
         });
 
-        // Submissão real do formulário (Firebase Auth + Realtime Database)
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -597,7 +669,6 @@
             }
         });
 
-        // Cadastro Social com Google
         btnGoogle.addEventListener('click', async () => {
             btnGoogle.classList.add('loading');
             btnGoogle.disabled = true;
