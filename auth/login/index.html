@@ -1,31 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocoPrime - Entrar</title>
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="color-scheme" content="light">
+    
+    <!-- SEO & Metatags -->
+    <title>FocoPrime Studio — Entrar</title>
+    <meta name="description" content="Acesse sua conta na FocoPrime Studio para gerenciar seus assistentes de inteligência artificial, acompanhar métricas e aproveitar APIs em tempo real.">
+    <meta name="keywords" content="FocoPrime, entrar, login, painel, inteligência artificial, assistentes de IA">
+    <meta name="author" content="FocoPrime">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://dashboard.focoprime.online/auth/login/">
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/favicon-new.png">
+    <link rel="apple-touch-icon" href="../../assets/favicon-new.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_MZ">
+    <meta property="og:site_name" content="FocoPrime">
+    <meta property="og:title" content="FocoPrime Studio — Entrar na sua Conta">
+    <meta property="og:description" content="Acesse o seu painel FocoPrime Studio para gerenciar agentes de inteligência artificial e APIs em tempo real.">
+    <meta property="og:url" content="https://dashboard.focoprime.online/auth/login/">
+    <meta property="og:image" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta property="og:image:secure_url" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="FocoPrime Studio - Entrar">
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FocoPrime Studio — Entrar na sua Conta">
+    <meta name="twitter:description" content="Acesse seu painel FocoPrime Studio para gerenciar seus assistentes de inteligência artificial.">
+    <meta name="twitter:image" content="https://dashboard.focoprime.online/assets/og-imagem.png">
+    <meta name="twitter:image:alt" content="FocoPrime Studio - Entrar">
+
     <!-- Google Fonts: DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     
-    <!-- Custom CSS -->
+    <!-- Flaticon UIcons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+    <!-- Custom CSS Alinhado ao Portfólio (Design Flat & Limpo) -->
     <style>
         /* ==========================================================================
-           CONFIGURAÇÕES GERAIS E TEMA (LOGIN E CADASTRO)
+           VARIÁVEIS DE TEMA (PORTFÓLIO / DESIGN SYSTEM)
            ========================================================================== */
         :root {
-          --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          --bg-auth: #ffffff;
-          --text-main: #111827;
-          --text-muted: #6b7280;
-          --border-color: #d1d5db;
-          --border-focus: #111827;
-          --primary-btn: #000000;
-          --primary-btn-hover: #262626;
-          --link-color: #2563eb;
-          --step-active: #3b82f6;
-          --step-inactive: #e5e7eb;
+          --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          
+          --bg-app: #ffffff; /* Fundo limpo e contínuo */
+          --bg-surface: #ffffff;
+          --bg-subtle: #f8fafc;
+          
+          --border-color: #e2e8f0;
+          --border-hover: #cbd5e1;
+          --border-focus: #4f46e5;
+          
+          --text-main: #0f172a;
+          --text-muted: #64748b;
+          --text-light: #94a3b8;
+          
+          --primary: #4f46e5;
+          --primary-hover: #4338ca;
+          
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-full: 9999px;
+          
+          --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -40,39 +93,44 @@
         body.auth-body button, 
         body.auth-body select, 
         body.auth-body textarea {
-          font-family: var(--font-family) !important;
+          font-family: var(--font-main) !important;
         }
 
         body.auth-body {
-          background-color: var(--bg-auth);
+          background-color: var(--bg-app);
           color: var(--text-main);
           display: flex;
           justify-content: center;
           align-items: center;
           min-height: 100vh;
-          padding: 20px;
+          padding: 32px 24px;
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Container Centralizado */
+        /* Container Principal Flat (Sem card, sem sombra, sem bordas externas) */
         .auth-container {
           width: 100%;
-          max-width: 440px;
+          max-width: 400px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          position: relative;
         }
 
         /* Logotipo */
         .auth-logo-wrapper {
           display: flex;
           justify-content: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .auth-logo {
-          height: 38px;
+          height: 32px;
           object-fit: contain;
         }
 
@@ -86,17 +144,21 @@
 
         /* Títulos */
         .auth-title {
-          font-size: 2rem;
+          font-size: 26px;
           font-weight: 700;
           color: var(--text-main);
           letter-spacing: -0.02em;
           margin-bottom: 2px;
+          text-align: left;
+          width: 100%;
         }
 
         .auth-subtitle {
-          font-size: 0.92rem;
+          font-size: 14px;
           color: var(--text-muted);
           margin-bottom: 8px;
+          text-align: left;
+          width: 100%;
         }
 
         /* Campos de Input */
@@ -109,100 +171,93 @@
         }
 
         .auth-input-group label {
-          font-size: 0.88rem;
-          color: #4b5563;
-          font-weight: 500;
+          font-size: 13px;
+          color: var(--text-main);
+          font-weight: 600;
         }
 
         .auth-input-group input {
           width: 100%;
-          padding: 14px 16px;
-          font-size: 0.98rem;
+          padding: 12px 14px;
+          font-size: 14px;
           border: 1px solid var(--border-color);
-          border-radius: 12px;
+          border-radius: var(--radius-sm);
           outline: none;
           color: var(--text-main);
           background-color: #ffffff;
-          transition: border-color 0.2s, box-shadow 0.2s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
         }
 
         .auth-input-group input::placeholder {
-          color: #9ca3af;
+          color: var(--text-light);
+        }
+
+        .auth-input-group input:hover {
+          border-color: var(--border-hover);
         }
 
         .auth-input-group input:focus {
           border-color: var(--border-focus);
-          box-shadow: 0 0 0 1px var(--border-focus);
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
         }
 
         /* Botões */
         .auth-btn-primary {
           position: relative;
           width: 100%;
-          padding: 15px;
-          background-color: var(--primary-btn);
+          padding: 12px 20px;
+          background-color: var(--text-main);
           color: #ffffff;
           border: none;
-          border-radius: 9999px;
-          font-size: 0.98rem;
+          border-radius: var(--radius-sm);
+          font-size: 14px;
           font-weight: 600;
           cursor: pointer;
-          transition: background-color 0.2s, transform 0.1s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
           margin-top: 4px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
         }
 
         .auth-btn-primary:hover {
-          background-color: var(--primary-btn-hover);
+          background-color: var(--primary);
         }
 
         .auth-btn-primary:disabled {
-          opacity: 0.85;
+          opacity: 0.7;
           cursor: not-allowed;
         }
 
-        /* Estado de Loading Giratório no Botão (Sem Texto) */
-        .auth-btn-primary.loading {
-          color: transparent !important;
-          pointer-events: none;
-        }
-
-        .auth-btn-primary.loading::after {
-          content: "";
-          position: absolute;
-          width: 22px;
-          height: 22px;
-          top: 50%;
-          left: 50%;
-          margin-left: -11px;
-          margin-top: -11px;
-          border: 2.5px solid rgba(255, 255, 255, 0.3);
-          border-top-color: #ffffff;
-          border-radius: 50%;
-          animation: spinBtn 0.8s linear infinite;
-        }
-
+        /* Estado de Loading Giratório no Botão */
+        .auth-btn-primary.loading,
         .auth-btn-social.loading {
           color: transparent !important;
           pointer-events: none;
         }
 
-        .auth-btn-social.loading svg {
-          display: none;
-        }
-
+        .auth-btn-primary.loading::after,
         .auth-btn-social.loading::after {
           content: "";
           position: absolute;
-          width: 22px;
-          height: 22px;
+          width: 20px;
+          height: 20px;
           top: 50%;
           left: 50%;
-          margin-left: -11px;
-          margin-top: -11px;
-          border: 2.5px solid rgba(0, 0, 0, 0.2);
-          border-top-color: #111827;
+          margin-left: -10px;
+          margin-top: -10px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #ffffff;
           border-radius: 50%;
           animation: spinBtn 0.8s linear infinite;
+        }
+
+        .auth-btn-social.loading::after {
+          border-color: rgba(0, 0, 0, 0.2);
+          border-top-color: var(--text-main);
         }
 
         @keyframes spinBtn {
@@ -213,16 +268,16 @@
           display: flex;
           align-items: center;
           text-align: center;
-          margin: 6px 0;
-          color: #9ca3af;
-          font-size: 0.85rem;
+          margin: 8px 0;
+          color: var(--text-light);
+          font-size: 13px;
         }
 
         .auth-divider::before,
         .auth-divider::after {
           content: '';
           flex: 1;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid var(--border-color);
         }
 
         .auth-divider span {
@@ -232,43 +287,51 @@
         .auth-btn-social {
           position: relative;
           width: 100%;
-          padding: 13px 16px;
+          padding: 12px 16px;
           background-color: #ffffff;
           color: var(--text-main);
           border: 1px solid var(--border-color);
-          border-radius: 9999px;
-          font-size: 0.95rem;
+          border-radius: var(--radius-sm);
+          font-size: 14px;
           font-weight: 500;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          transition: background-color 0.2s, border-color 0.2s;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
         }
 
         .auth-btn-social:hover {
-          background-color: #f9fafb;
-          border-color: #9ca3af;
+          background-color: var(--bg-subtle);
+          border-color: var(--border-hover);
         }
 
         /* Termos e Rodapé */
         .auth-terms {
-          font-size: 0.75rem;
+          font-size: 12px;
           color: var(--text-muted);
-          line-height: 1.4;
+          line-height: 1.5;
           text-align: left;
           margin: 4px 0;
         }
 
         .auth-link {
-          color: var(--link-color);
+          color: var(--primary);
           text-decoration: none;
           font-weight: 500;
         }
 
         .auth-link:hover {
           text-decoration: underline;
+        }
+
+        .auth-footer-text {
+          margin-top: 24px;
+          font-size: 14px;
+          text-align: center;
+          width: 100%;
         }
 
         /* Campo de Senha com Ícone de Mostrar/Ocultar e Esqueceu a Senha */
@@ -279,7 +342,7 @@
 
         .auth-password-wrapper input {
           width: 100%;
-          padding-right: 48px;
+          padding-right: 44px;
         }
 
         .auth-toggle-password {
@@ -290,16 +353,16 @@
           background: none;
           border: none;
           cursor: pointer;
-          color: #6b7280;
+          color: var(--text-muted);
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 4px;
-          transition: color 0.2s;
+          transition: var(--transition);
         }
 
         .auth-toggle-password:hover {
-          color: #111827;
+          color: var(--text-main);
         }
 
         .hidden-icon {
@@ -314,16 +377,25 @@
         }
 
         .auth-forgot-wrapper a {
-          font-size: 0.85rem;
-          color: #6b7280;
+          font-size: 13px;
+          color: var(--text-muted);
           font-weight: 500;
           text-decoration: none;
-          transition: color 0.2s;
+          transition: var(--transition);
         }
 
         .auth-forgot-wrapper a:hover {
-          color: #111827;
+          color: var(--primary);
           text-decoration: underline;
+        }
+
+        /* Correção universal para ícones Flaticon (uicons) */
+        i[class^="fi-"], 
+        i[class*=" fi-"] {
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
     </style>
 </head>
@@ -332,7 +404,7 @@
     <div class="auth-container">
         <!-- Logotipo FocoPrime -->
         <div class="auth-logo-wrapper">
-            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x36/6366f1/ffffff?text=FocoPrime'">
+            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x32/4f46e5/ffffff?text=FocoPrime'">
         </div>
 
         <h1 class="auth-title">Bem-vindo de Volta</h1>
@@ -341,7 +413,7 @@
         <form class="auth-form" id="loginForm">
             <div class="auth-input-group">
                 <label for="loginInput">E-mail ou Nome de usuário</label>
-                <input type="text" id="loginInput" placeholder="Digite seu e-mail ou usuário" required>
+                <input type="text" id="loginInput" placeholder="nome@exemplo.com ou usuário" required>
             </div>
             
             <div class="auth-input-group">
@@ -350,12 +422,12 @@
                     <input type="password" id="passwordInput" placeholder="Sua senha" required>
                     <button type="button" class="auth-toggle-password" id="togglePasswordBtn" aria-label="Mostrar senha">
                         <!-- Ícone de Olho Fechado (Oculto por padrão) -->
-                        <svg id="eyeClosedIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        <svg id="eyeClosedIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                         <!-- Ícone de Olho Aberto -->
-                        <svg id="eyeOpenIcon" class="hidden-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg id="eyeOpenIcon" class="hidden-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
                 </div>
-                <!-- Esqueceu a senha logo abaixo da barra de senha, alinhado à direita -->
+                <!-- Esqueceu a senha alinhado à direita -->
                 <div class="auth-forgot-wrapper">
                     <a href="#" id="forgotPasswordBtn" class="auth-link">Esqueceu a sua senha?</a>
                 </div>
@@ -425,7 +497,7 @@
         const btnSubmit = document.getElementById('btnSubmit');
         const btnGoogle = document.getElementById('btnGoogle');
 
-        // Submissão do Formulário de Login (E-mail ou Username + Senha)
+        // Submissão do Formulário de Login
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -504,7 +576,7 @@
                     userData = {
                         uid: user.uid,
                         email: user.email,
-                        username: defaultUsername,
+                    username: defaultUsername,
                         displayName: user.displayName || defaultUsername,
                         photoURL: user.photoURL || '',
                         plan: 'Pessoal · Gratuito',
