@@ -1,195 +1,118 @@
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+export function renderSidebar(basePath = '') {
+  // Verifica em qual página o usuário está com base na URL
+  const path = window.location.pathname;
+  const isCreatePage = path.includes('criar');
+  const isDashboardPage = path.endsWith('index.html') || path.endsWith('/') || path === '';
 
-/**
- * Renderiza dinamicamente as IAs reais do usuário na secção "Suas IAs" do dashboard com Skeleton moderno.
- * @param {string} userId - O UID do usuário autenticado.
- */
-export async function renderUserAIs(userId) {
-  const gridContainer = document.getElementById('aiCardsGrid') || document.querySelector('.ai-cards-grid');
-  if (!gridContainer) return;
+  return `
+    <!-- Overlay Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  // Exibe skeleton moderno de carregamento com 3 placeholders
-  gridContainer.innerHTML = `
-    <div class="ai-card-skeleton">
-      <div class="skeleton-top">
-        <div class="skeleton-icon skeleton-shine"></div>
-        <div class="skeleton-badge skeleton-shine"></div>
+    <!-- Sidebar Principal -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="${basePath}index.html" class="brand">
+          <img src="${basePath}assets/logo.png" alt="FocoPrime Logo" class="brand-logo" onerror="this.src='https://placehold.co/120x36/6366f1/ffffff?text=FocoPrime'">
+        </a>
+        <button class="close-sidebar-btn" id="closeSidebarBtn">
+          <i class="fi fi-rr-cross-small"></i>
+        </button>
       </div>
-      <div class="skeleton-title skeleton-shine"></div>
-      <div>
-        <div class="skeleton-line skeleton-shine" style="margin-bottom: 6px;"></div>
-        <div class="skeleton-line-short skeleton-shine"></div>
-      </div>
-      <div class="skeleton-meta">
-        <div class="skeleton-meta-item skeleton-shine"></div>
-        <div class="skeleton-meta-item skeleton-shine" style="width: 45%;"></div>
-      </div>
-      <div class="skeleton-actions">
-        <div class="skeleton-btn-primary skeleton-shine"></div>
-        <div class="skeleton-btn-outline skeleton-shine"></div>
-      </div>
-    </div>
-    <div class="ai-card-skeleton">
-      <div class="skeleton-top">
-        <div class="skeleton-icon skeleton-shine"></div>
-        <div class="skeleton-badge skeleton-shine"></div>
-      </div>
-      <div class="skeleton-title skeleton-shine"></div>
-      <div>
-        <div class="skeleton-line skeleton-shine" style="margin-bottom: 6px;"></div>
-        <div class="skeleton-line-short skeleton-shine"></div>
-      </div>
-      <div class="skeleton-meta">
-        <div class="skeleton-meta-item skeleton-shine"></div>
-        <div class="skeleton-meta-item skeleton-shine" style="width: 45%;"></div>
-      </div>
-      <div class="skeleton-actions">
-        <div class="skeleton-btn-primary skeleton-shine"></div>
-        <div class="skeleton-btn-outline skeleton-shine"></div>
-      </div>
-    </div>
-    <div class="ai-card-skeleton">
-      <div class="skeleton-top">
-        <div class="skeleton-icon skeleton-shine"></div>
-        <div class="skeleton-badge skeleton-shine"></div>
-      </div>
-      <div class="skeleton-title skeleton-shine"></div>
-      <div>
-        <div class="skeleton-line skeleton-shine" style="margin-bottom: 6px;"></div>
-        <div class="skeleton-line-short skeleton-shine"></div>
-      </div>
-      <div class="skeleton-meta">
-        <div class="skeleton-meta-item skeleton-shine"></div>
-        <div class="skeleton-meta-item skeleton-shine" style="width: 45%;"></div>
-      </div>
-      <div class="skeleton-actions">
-        <div class="skeleton-btn-primary skeleton-shine"></div>
-        <div class="skeleton-btn-outline skeleton-shine"></div>
-      </div>
-    </div>
-  `;
 
-  const db = getDatabase();
-  
-  try {
-    const assistantsRef = ref(db, 'assistants');
-    const snapshot = await get(assistantsRef);
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <span class="nav-label">Geral</span>
+          <!-- Dashboard ativo condicionalmente -->
+          <a href="${basePath}index.html" class="nav-item ${isDashboardPage && !isCreatePage ? 'active' : ''}">
+            <i class="fi fi-rr-apps"></i>
+            <span>Dashboard</span>
+          </a>
 
-    let cardsHtml = '';
-    let hasAi = false;
-
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      
-      Object.keys(data).forEach((slug) => {
-        const ai = data[slug];
-        
-        if (ai.ownerUid === userId) {
-          hasAi = true;
-          const logo = ai.logoUrl || 'https://placehold.co/100x100/6366f1/ffffff?text=AI';
-          
-          cardsHtml += `
-            <div class="ai-card">
-              <div class="ai-card-top">
-                <div class="ai-icon-box" style="background: ${ai.themeColor ? ai.themeColor + '15' : '#e0e7ff'}; color: ${ai.themeColor || 'var(--primary)'};">
-                  <img src="${logo}" alt="${ai.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.onerror=null; this.src='https://placehold.co/44x44/6366f1/ffffff?text=AI'">
-                </div>
-                <span class="status-badge status-online">Ativo</span>
+          <!-- Menu Desdobrável: Minhas IAs -->
+          <div class="nav-dropdown ${isCreatePage ? 'open' : ''}" id="navDropdownAi">
+            <button class="nav-item nav-dropdown-toggle ${isCreatePage ? 'active-parent' : ''}" id="aiDropdownToggle">
+              <div class="nav-item-left">
+                <i class="fi fi-rr-brain"></i>
+                <span>Minhas IAs</span>
               </div>
-              <h3>${ai.name}</h3>
-              <p>${ai.description || 'Assistente de IA personalizado para atendimento e conversão.'}</p>
-              <div class="ai-card-meta">
-                <span><i class="fi fi-rr-globe"></i> ${ai.slug}.focoprime.online</span>
-                <span><i class="fi fi-rr-calendar"></i> ${new Date(ai.createdAt).toLocaleDateString()}</span>
-              </div>
-              <div class="ai-card-actions">
-                <a href="personalize/index.html?slug=${ai.slug}" class="btn-secondary" style="text-align: center;">Personalizar</a>
-                <button class="btn-outline" onclick="window.open('https://${ai.slug}.focoprime.online', '_blank')" title="Ver site"><i class="fi fi-rr-eye"></i></button>
-              </div>
+              <i class="fi fi-rr-angle-small-down dropdown-arrow"></i>
+            </button>
+            <div class="dropdown-menu" id="aiDropdownMenu">
+              <a href="${basePath}criar/index.html" class="dropdown-sub-item ${isCreatePage ? 'active' : ''}">Criar nova</a>
+              <a href="${basePath}ai/index.html" class="dropdown-sub-item">Minhas IAs</a>
+              <a href="${basePath}personalize/index.html" class="dropdown-sub-item">Personalizar</a>
             </div>
-          `;
-        }
-      });
-    }
-
-    // Cartão estático para criar novo agente no final da grelha
-    cardsHtml += `
-      <div class="ai-card new-ai-card" id="createNewAiCard">
-        <div class="new-ai-content">
-          <div class="add-icon">
-            <i class="fi fi-rr-add"></i>
           </div>
-          <h3>Criar Novo Agente de IA</h3>
-          <p>Construa um novo modelo de inteligência artificial personalizado para o seu site.</p>
+
+          <a href="#" class="nav-item">
+            <i class="fi fi-rr-boxes"></i>
+            <span>Modelos</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fi fi-rr-chart-histogram"></i>
+            <span>Métricas & Uso</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-label">Gerenciamento</span>
+          <a href="#" class="nav-item">
+            <i class="fi fi-rr-credit-card"></i>
+            <span>Plano e Assinatura</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fi fi-rr-settings"></i>
+            <span>Configurações</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="ia-status-card">
+          <div class="status-header">
+            <i class="fi fi-sr-bolt"></i>
+            <span>Limite de Tokens</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 68%;"></div>
+          </div>
+          <span class="status-text">68.400 / 100.000 tokens usados</span>
         </div>
       </div>
-    `;
-
-    gridContainer.innerHTML = cardsHtml;
-
-    updateWelcomeAction(hasAi);
-
-    const createCard = document.getElementById('createNewAiCard');
-    if (createCard) {
-      createCard.addEventListener('click', () => {
-        triggerProgressAndRedirect('criar/index.html');
-      });
-    }
-
-    return hasAi;
-  } catch (error) {
-    console.error("Erro ao carregar as IAs do usuário:", error);
-    gridContainer.innerHTML = `<div style="grid-column: span 3; text-align: center; padding: 30px; color: var(--danger);">Erro ao carregar os seus agentes. Tente novamente.</div>`;
-  }
-}
-
-function updateWelcomeAction(hasAi) {
-  const welcomeHeaderBtn = document.getElementById('welcomeActionBtn') || document.querySelector('.welcome-header .btn-primary, .welcome-header .btn-upgrade-gold');
-  
-  if (!welcomeHeaderBtn) return;
-
-  if (hasAi) {
-    welcomeHeaderBtn.className = 'btn-upgrade-gold';
-    welcomeHeaderBtn.innerHTML = `
-      <i class="fi fi-sr-crown" style="color: #fbbf24;"></i>
-      <span>Upgrade para PRO</span>
-    `;
-    welcomeHeaderBtn.onclick = (e) => {
-      e.preventDefault();
-      triggerProgressAndRedirect('/planos/');
-    };
-  } else {
-    welcomeHeaderBtn.className = 'btn-primary';
-    welcomeHeaderBtn.innerHTML = `
-      <i class="fi fi-rr-plus"></i>
-      <span>Criar Uma Nova IA</span>
-    `;
-    welcomeHeaderBtn.onclick = (e) => {
-      e.preventDefault();
-      triggerProgressAndRedirect('criar/index.html');
-    };
-  }
-}
-
-function triggerProgressAndRedirect(targetUrl) {
-  if (document.getElementById('pageTransitionProgressBar')) return;
-
-  const progressBar = document.createElement('div');
-  progressBar.id = 'pageTransitionProgressBar';
-  progressBar.style.cssText = `
-    position: fixed; top: 0; left: 0; height: 3px; background: var(--primary, #6366f1);
-    z-index: 99999; width: 0%; transition: width 0.4s ease-in-out;
+    </aside>
   `;
-  document.body.appendChild(progressBar);
+}
 
-  setTimeout(() => {
-    progressBar.style.width = '70%';
-  }, 50);
+export function initSidebarListeners() {
+  const menuToggleBtn = document.getElementById('menuToggleBtn');
+  const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  
+  // Lógica do Submenu Minhas IAs com animação
+  const aiDropdownToggle = document.getElementById('aiDropdownToggle');
+  const navDropdownAi = document.getElementById('navDropdownAi');
 
-  setTimeout(() => {
-    progressBar.style.width = '100%';
-    setTimeout(() => {
-      window.location.href = targetUrl;
-    }, 200);
-  }, 350);
+  if (aiDropdownToggle && navDropdownAi) {
+    aiDropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      navDropdownAi.classList.toggle('open');
+    });
+  }
+
+  const openSidebar = () => {
+    if (sidebar) sidebar.classList.add('active');
+    if (sidebarOverlay) sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeSidebar = () => {
+    if (sidebar) sidebar.classList.remove('active');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  if (menuToggleBtn) menuToggleBtn.addEventListener('click', openSidebar);
+  if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+  if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
 }
