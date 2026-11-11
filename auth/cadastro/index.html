@@ -51,33 +51,23 @@
 
     <!-- Custom CSS Alinhado ao Portfólio (Design Flat & Limpo) -->
     <style>
-        /* ==========================================================================
-           VARIÁVEIS DE TEMA (PORTFÓLIO / DESIGN SYSTEM)
-           ========================================================================== */
         :root {
           --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          
-          --bg-app: #ffffff; /* Fundo limpo e continuo */
+          --bg-app: #ffffff;
           --bg-surface: #ffffff;
           --bg-subtle: #f8fafc;
-          
           --border-color: #e2e8f0;
           --border-hover: #cbd5e1;
           --border-focus: #4f46e5;
-          
           --text-main: #0f172a;
           --text-muted: #64748b;
           --text-light: #94a3b8;
-          
           --primary: #4f46e5;
           --primary-hover: #4338ca;
-          
           --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-
           --radius-sm: 8px;
           --radius-md: 12px;
           --radius-full: 9999px;
-          
           --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -99,7 +89,6 @@
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Container Principal Flat (Sem card, sem sombra, sem bordas externas) */
         .auth-container {
           width: 100%;
           max-width: 400px;
@@ -114,7 +103,6 @@
           position: relative;
         }
 
-        /* Logotipo */
         .auth-logo-wrapper {
           display: flex;
           justify-content: center;
@@ -126,7 +114,6 @@
           object-fit: contain;
         }
 
-        /* Botão Voltar */
         .auth-back-btn {
           align-self: flex-start;
           background: none;
@@ -151,7 +138,6 @@
           display: none;
         }
 
-        /* Indicador de Passos (Step Indicator) */
         .step-indicator {
           display: flex;
           justify-content: center;
@@ -173,7 +159,6 @@
           background-color: var(--primary);
         }
 
-        /* Formulário e Passos */
         .auth-form {
           width: 100%;
           display: flex;
@@ -194,17 +179,10 @@
         }
 
         @keyframes fadeInStep {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Títulos */
         .auth-title {
           font-size: 26px;
           font-weight: 700;
@@ -223,7 +201,6 @@
           width: 100%;
         }
 
-        /* Campos de Input */
         .auth-input-group {
           display: flex;
           flex-direction: column;
@@ -275,7 +252,6 @@
           flex: 1;
         }
 
-        /* Botão Primário (Estilo Portfólio) */
         .auth-btn-primary {
           position: relative;
           width: 100%;
@@ -306,7 +282,6 @@
           cursor: not-allowed;
         }
 
-        /* Spinner de Loading */
         .auth-btn-primary.loading,
         .auth-btn-social.loading {
           color: transparent !important;
@@ -338,7 +313,6 @@
           to { transform: rotate(360deg); }
         }
 
-        /* Divisor */
         .auth-divider {
           display: flex;
           align-items: center;
@@ -359,7 +333,6 @@
           padding: 0 10px;
         }
 
-        /* Botão Social (Google) */
         .auth-btn-social {
           position: relative;
           width: 100%;
@@ -385,7 +358,6 @@
           border-color: var(--border-hover);
         }
 
-        /* Termos e Rodapé */
         .auth-terms {
           font-size: 12px;
           color: var(--text-muted);
@@ -411,7 +383,6 @@
           width: 100%;
         }
         
-        /* Correção universal para ícones Flaticon (uicons) */
         i[class^="fi-"], 
         i[class*=" fi-"] {
           line-height: 1;
@@ -424,18 +395,15 @@
 <body class="auth-body">
 
     <div class="auth-container">
-        <!-- Logotipo FocoPrime -->
         <div class="auth-logo-wrapper">
             <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x32/4f46e5/ffffff?text=FocoPrime'">
         </div>
 
-        <!-- Botão Voltar (Oculto na Etapa 1) -->
         <button type="button" class="auth-back-btn hidden" id="backBtn">
             <i class="fi fi-rr-arrow-left"></i>
             Voltar
         </button>
 
-        <!-- Indicador de Etapas -->
         <div class="step-indicator">
             <span class="step-pill active" id="stepPill1"></span>
             <span class="step-pill" id="stepPill2"></span>
@@ -444,7 +412,6 @@
 
         <form id="signupForm" class="auth-form">
             
-            <!-- ETAPA 1: Inserir E-mail -->
             <div class="wizard-step step-1 active" id="step1">
                 <h1 class="auth-title">Insira seu e-mail</h1>
                 <p class="auth-subtitle">Comece a criar inteligências artificiais e sites incríveis.</p>
@@ -467,7 +434,6 @@
                 </button>
             </div>
 
-            <!-- ETAPA 2: Configurar Credenciais -->
             <div class="wizard-step step-2" id="step2">
                 <h1 class="auth-title">Configure suas credenciais</h1>
                 <p class="auth-subtitle">Defina seu nome de usuário e senha de acesso.</p>
@@ -490,7 +456,6 @@
                 <button type="button" class="auth-btn-primary" id="btnNext2">Continuar</button>
             </div>
 
-            <!-- ETAPA 3: Finalizar Conta -->
             <div class="wizard-step step-3" id="step3">
                 <h1 class="auth-title">Finalize sua conta</h1>
                 <p class="auth-subtitle">Conte-nos um pouco mais sobre você.</p>
@@ -522,7 +487,7 @@
 
         </form>
 
-        <p class="auth-subtitle auth-footer-text">Já tem uma conta? <a href="../login/index.html" class="auth-link">Entrar</a></p>
+        <p class="auth-subtitle auth-footer-text">Já tem uma conta? <a href="https://dashboard.focoprime.online/auth/login/" class="auth-link">Entrar</a></p>
     </div>
 
     <!-- Script Firebase -->
@@ -643,6 +608,7 @@
 
                 const displayName = `${firstName} ${lastName}`.trim() || username;
                 
+                // Cadastro inicial sem travar em Plano Base — o plano é definido na página seguinte
                 const userData = {
                     uid: user.uid,
                     email: email,
