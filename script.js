@@ -77,3 +77,21 @@ document.addEventListener('DOMContentLoaded', () => {
       promoBar.style.display = 'none';
     });
   }
+
+// Transição suave do Banner após o carregamento da imagem
+document.addEventListener('DOMContentLoaded', () => {
+  const bannerImg = document.getElementById('welcomeBannerImg');
+  const bannerSkeleton = document.getElementById('welcomeBannerSkeleton');
+
+  if (bannerImg && bannerSkeleton) {
+    if (bannerImg.complete) {
+      bannerSkeleton.classList.add('fade-out');
+      bannerImg.classList.add('loaded');
+    } else {
+      bannerImg.addEventListener('load', () => {
+        bannerSkeleton.classList.add('fade-out');
+        bannerImg.classList.add('loaded');
+      });
+    }
+  }
+});
