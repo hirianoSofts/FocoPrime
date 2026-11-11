@@ -1,0 +1,86 @@
+/* ==========================================================================
+   BARRA DE MODELOS (Abaixo do Welcome Header)
+   ========================================================================== */
+.models-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 12px 0;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.models-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.models-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.models-avatars img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-surface);
+  margin-left: -10px;
+}
+
+.models-avatars img:first-child {
+  margin-left: 0;
+}
+
+.models-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.models-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.models-desc {
+  font-size: 13.5px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.models-more {
+  color: var(--primary);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.models-more:hover {
+  text-decoration: underline;
+}
+
+.models-action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.03), 0 2px 4px -2px rgb(0 0 0 / 0.03);;
+  transition: var(--transition);
+}
+
+.models-action-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+  border-color: var(--border-hover);
+}
