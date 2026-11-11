@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#8F00FF">
   <meta name="color-scheme" content="light">
   
-  <!-- SEO & Metatags principais (Otimizados e concisos) -->
+  <!-- SEO & Metatags principais -->
   <title>FocoPrime Dashboard — Gerencie os seus Agentes de IA</title>
   <meta name="description" content="Painel de controlo da FocoPrime. Acompanhe métricas, gira os seus assistentes de inteligência artificial e configure a sua conta de forma simples.">
   <meta name="keywords" content="FocoPrime, inteligência artificial, criar IA, assistentes de IA, plataforma de IA, FocoAI, Moçambique">
@@ -29,12 +29,14 @@
 
   <!-- Folhas de Estilo -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/estatisticas.css">
   <link rel="stylesheet" href="css/promo.css">
   <link rel="stylesheet" href="css/upgradebtn.css">
   <link rel="stylesheet" href="css/suasias.css">
   <link rel="stylesheet" href="css/welcome.css">
+  <link rel="stylesheet" href="css/modelbar.css">
 
-  <!-- Open Graph: Redes Sociais (WhatsApp, Facebook, LinkedIn) -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_MZ">
   <meta property="og:site_name" content="FocoPrime">
@@ -72,103 +74,258 @@
   <!-- Container Principal com ID para receber a Sidebar -->
   <div class="app-container" id="appContainer">
 
-    <!-- Conteúdo Principal (Sidebar e Cabeçalho injetados via JS) -->
+    <!-- Conteúdo Principal -->
     <main class="main-content" id="mainContent">
 
       <!-- Área de Conteúdo / Dashboard -->
       <div class="dashboard-body">
         
-        <!-- Header de Boas-vindas com Skeleton Dinâmico -->
+        <!-- Header de Boas-vindas com Barra de Mensagens e Botões -->
         <div class="welcome-header">
-          <div class="welcome-titles-container">
-            <!-- Skeleton Inicial -->
-            <div class="welcome-skeleton" id="welcomeSkeleton">
-              <div class="skeleton-welcome-title skeleton-shine"></div>
-              <div class="skeleton-welcome-subtitle skeleton-shine"></div>
-            </div>
+          
+          <!-- Barra de Mensagem e Teste de Modelos -->
+          <div class="foco-prompt-container">
             
-            <!-- Conteúdo Real (Revelado com Transição Suave) -->
-            <div class="welcome-real-content" id="welcomeRealContent">
-              <h1 id="welcomeTitle">Olá, Carregando... 👋</h1>
-              <p>Aqui está o resumo dos seus sites, agentes de IA e métricas de desempenho.</p>
+            <!-- Tag de Anúncio / Novo Recurso -->
+            <div class="prompt-alert-pill">
+              <span class="prompt-pill-tag">Novo</span>
+              <span class="prompt-pill-text">Teste e crie conteúdos com os modelos de IA disponíveis</span>
+              <button class="prompt-pill-close" aria-label="Fechar aviso">
+                <i class="fi fi-rr-cross"></i>
+              </button>
             </div>
+
+            <!-- Caixa Principal de Prompt / Mensagem -->
+            <div class="foco-prompt-box">
+              <div class="foco-prompt-input-area">
+                <textarea class="foco-prompt-textarea" placeholder="O que deseja criar hoje? Digite o seu prompt..." rows="2"></textarea>
+              </div>
+
+              <!-- Barra de Ferramentas Inferior da Caixa -->
+              <div class="foco-prompt-toolbar">
+                <div class="foco-prompt-toolbar-left">
+                  <button class="foco-tool-btn" title="Adicionar anexo ou contexto" aria-label="Adicionar anexo">
+                    <i class="fi fi-rr-plus"></i>
+                  </button>
+                  
+                  <!-- Seletor de Modelo -->
+                  <div class="foco-model-selector">
+                    <button class="foco-model-toggle" id="focoModelToggle">
+                      <span class="model-name">Foco WAN 3.1</span>
+                      <i class="fi fi-rr-angle-small-down"></i>
+                    </button>
+                  </div>
+
+                  <!-- Modo / Velocidade -->
+                  <div class="foco-mode-badge">
+                    <span>Ask</span>
+                    <span class="dot">•</span>
+                    <span>Speed</span>
+                  </div>
+                </div>
+
+                <div class="foco-prompt-toolbar-right">
+                  <button class="foco-send-btn foco-send-round" aria-label="Enviar prompt">
+                    <i class="fi fi-rr-arrow-up"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Atalhos / Chips Rápidos Inferiores -->
+            <div class="foco-quick-chips">
+              <button class="quick-chip">
+                <i class="fi fi-rr-magic-wand"></i>
+                <span>Gerar Imagem</span>
+                <span class="badge-pro-tag">PRO</span>
+              </button>
+              <button class="quick-chip">
+                <i class="fi fi-rr-cloud-upload"></i>
+                <span>Remover BG</span>
+              </button>
+              <button class="quick-chip">
+                <i class="fi fi-rr-video-camera"></i>
+                <span>Motion Graphic</span>
+              </button>
+              <button class="quick-chip">
+                <i class="fi fi-rr-brain"></i>
+                <span>FocoAI Studio</span>
+              </button>
+              <button class="quick-chip external">
+                <span>Documentação</span>
+                <i class="fi fi-rr-arrow-up-right"></i>
+              </button>
+            </div>
+
           </div>
           
-          <!-- Botão Principal com Skeleton / Transição Integrada -->
+          <!-- Grupo de Ações (Botão Principal + Botão Dropdown com Skeleton Conjunto) -->
           <div class="welcome-action-wrapper">
             <div class="welcome-btn-skeleton skeleton-shine" id="welcomeBtnSkeleton"></div>
-            <button class="btn-primary" id="welcomeActionBtn">
-              <i class="fi fi-rr-plus"></i>
-              <span>Criar Uma Nova IA</span>
-            </button>
+            
+            <div class="welcome-action-group" id="welcomeActionGroup">
+              <!-- Botão Principal -->
+              <button class="btn-primary" id="welcomeActionBtn">
+                <i class="fi fi-rr-plus" id="welcomeActionIcon"></i>
+                <span id="welcomeActionText">Criar Uma Nova IA</span>
+              </button>
+
+              <!-- Botão Dropdown (Arrow Down) -->
+              <div class="welcome-dropdown-container">
+                <button class="btn-primary dropdown-toggle-btn" id="welcomeDropdownToggle" aria-label="Mais opções">
+                  <i class="fi fi-rr-angle-small-down" id="dropdownArrowIcon"></i>
+                </button>
+
+                <!-- Popover / Menu Suspenso -->
+                <div class="welcome-dropdown-popover" id="welcomeDropdownPopover">
+                  <a href="#" class="welcome-popover-item">
+                    <i class="fi fi-rr-rocket"></i>
+                    <span>Explorar planos</span>
+                  </a>
+                  <a href="https://wa.me/" target="_blank" rel="noopener" class="welcome-popover-item">
+                    <i class="fi fi-brands-whatsapp"></i>
+                    <span>WhatsApp</span>
+                  </a>
+                  <a href="#" class="welcome-popover-item">
+                    <i class="fi fi-rr-cloud-upload"></i>
+                    <span>Carregar</span>
+                    <span class="badge-pro-tag">PRO</span>
+                  </a>
+                  <div class="welcome-popover-divider"></div>
+                  <a href="#" class="welcome-popover-item text-danger">
+                    <i class="fi fi-rr-triangle-warning"></i>
+                    <span>Reportar erro</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
 
-        <!-- Grid de Cards Stat -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Últimos 30 dias</span>
+        <!-- Barra Horizontal de Modelos (Sem card, sem fundo) -->
+        <div class="models-bar">
+          <div class="models-bar-left">
+            <div class="models-avatars">
+              <img src="assets/favicon-new.png" alt="Avatar IA 1">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwf78kmIrlVG8lqCC-f4hmnfb-MBJAhew7A4BwMy9-Tg&s=10" alt="Avatar IA 2">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk4a-5BvBpDBSzT4BiRGW3Ec1jLWDH1TexNA&s" alt="Avatar IA 3">
             </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="124.500 MZN">124.500 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend trend-up">
-                <i class="fi fi-rr-stats"></i>
-                <span>Crescimento este mês</span>
-              </div>
-              <span class="stat-subtext">Comparado ao mês anterior</span>
+            <div class="models-info">
+              <span class="models-title">Modelos</span>
+              <span class="models-desc">Foco wan 3.1, gpt 20b <a href="#" class="models-more">ver mais</a></span>
             </div>
           </div>
-
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Ganhos Anuais</span>
-              <span class="badge-tag tag-danger">
-                <i class="fi fi-rr-arrow-small-down"></i> 0%
-              </span>
-            </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend">
-                <i class="fi fi-rr-stats"></i>
-                <span>Crescimento anual</span>
-              </div>
-              <span class="stat-subtext">Comparado ao ano anterior</span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-header">
-              <span class="stat-title">Pagamentos Pendentes</span>
-              <span class="badge-tag tag-danger">
-                <i class="fi fi-rr-arrow-small-down"></i> -5%
-              </span>
-            </div>
-            <div class="stat-value-container">
-              <h2 class="stat-value" data-value="0.00 MZN">0.00 MZN</h2>
-            </div>
-            <div class="stat-footer">
-              <div class="stat-trend">
-                <i class="fi fi-rr-stats"></i>
-                <span>Redução em relação ao mês passado</span>
-              </div>
-              <span class="stat-subtext">Os pedidos aguardando pagamento</span>
-            </div>
-          </div>
+          <button class="models-action-btn" aria-label="Abrir modelos">
+            <i class="fi fi-rr-arrow-right"></i>
+          </button>
         </div>
 
-        <!-- Seção Minhas IAs (Renderizada Dinamicamente) -->
+        <!-- Seção de Estatísticas de Utilização -->
+        <div class="estatisticas-grid">
+          
+          <!-- Card 1: Requisições Totais -->
+          <div class="estatistica-card">
+            <div class="estatistica-header">
+              <span class="estatistica-title">Requisições Totais</span>
+              <!-- Progresso Redondo Moderno (78%) -->
+              <div class="progress-ring-wrapper" title="78% do limite utilizado">
+                <svg class="progress-ring" width="40" height="40">
+                  <circle class="progress-ring-bg" cx="20" cy="20" r="16"></circle>
+                  <circle class="progress-ring-fill" cx="20" cy="20" r="16" style="stroke-dasharray: 100.5; stroke-dashoffset: 22.1;"></circle>
+                </svg>
+                <span class="progress-ring-text">78%</span>
+              </div>
+            </div>
+            <div class="estatistica-value-container">
+              <h2 class="estatistica-value" data-value="48.250">48.250</h2>
+            </div>
+            <div class="estatistica-footer">
+              <div class="estatistica-trend trend-up">
+                <i class="fi fi-rr-pulse"></i>
+                <span>Chamadas aos agentes</span>
+              </div>
+              <span class="estatistica-subtext">Nos últimos 30 dias</span>
+            </div>
+            <div class="estatistica-card-action">
+              <a href="#" class="estatistica-ver-mais">
+                <span>Ver mais</span>
+                <i class="fi fi-rr-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: Tokens Consumidos -->
+          <div class="estatistica-card">
+            <div class="estatistica-header">
+              <span class="estatistica-title">Tokens Consumidos</span>
+              <!-- Progresso Redondo Moderno (64%) -->
+              <div class="progress-ring-wrapper" title="64% do limite utilizado">
+                <svg class="progress-ring" width="40" height="40">
+                  <circle class="progress-ring-bg" cx="20" cy="20" r="16"></circle>
+                  <circle class="progress-ring-fill" cx="20" cy="20" r="16" style="stroke-dasharray: 100.5; stroke-dashoffset: 36.25;"></circle>
+                </svg>
+                <span class="progress-ring-text">64%</span>
+              </div>
+            </div>
+            <div class="estatistica-value-container">
+              <h2 class="estatistica-value" data-value="1.28M">1.28M</h2>
+            </div>
+            <div class="estatistica-footer">
+              <div class="estatistica-trend">
+                <i class="fi fi-rr-brain"></i>
+                <span>Volume de processamento</span>
+              </div>
+              <span class="estatistica-subtext">Contexto de IA acumulado</span>
+            </div>
+            <div class="estatistica-card-action">
+              <a href="#" class="estatistica-ver-mais">
+                <span>Ver mais</span>
+                <i class="fi fi-rr-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: Taxa de Resposta -->
+          <div class="estatistica-card">
+            <div class="estatistica-header">
+              <span class="estatistica-title">Taxa de Resposta</span>
+              <!-- Progresso Redondo Moderno (92%) -->
+              <div class="progress-ring-wrapper" title="92% de eficiência">
+                <svg class="progress-ring" width="40" height="40">
+                  <circle class="progress-ring-bg" cx="20" cy="20" r="16"></circle>
+                  <circle class="progress-ring-fill" cx="20" cy="20" r="16" style="stroke-dasharray: 100.5; stroke-dashoffset: 8.04;"></circle>
+                </svg>
+                <span class="progress-ring-text">92%</span>
+              </div>
+            </div>
+            <div class="estatistica-value-container">
+              <h2 class="estatistica-value" data-value="0.45s">0.45s</h2>
+            </div>
+            <div class="estatistica-footer">
+              <div class="estatistica-trend">
+                <i class="fi fi-rr-bolt"></i>
+                <span>Latência média de resposta</span>
+              </div>
+              <span class="estatistica-subtext">Desempenho dos modelos</span>
+            </div>
+            <div class="estatistica-card-action">
+              <a href="#" class="estatistica-ver-mais">
+                <span>Ver mais</span>
+                <i class="fi fi-rr-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Seção Minhas IAs -->
         <div class="content-section">
           <div class="section-title-bar">
             <h2>Suas IAs</h2>
             <a href="#" class="link-btn">Ver todos</a>
           </div>
 
-          <!-- Grid dinâmica vazia inicialmente para receber os dados reais do Firebase -->
           <div class="ai-cards-grid" id="aiCardsGrid">
             <div style="grid-column: span 3; text-align: center; padding: 40px; color: var(--text-muted);">
               Carregando as suas inteligências artificiais...
