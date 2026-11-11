@@ -49,6 +49,29 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.insertAdjacentHTML('afterbegin', renderHeader());
         initHeaderListeners();
     }
+
+    // Inicializar listener do novo botão Dropdown (Arrow Down)
+    const dropdownToggle = document.getElementById('welcomeDropdownToggle');
+    const dropdownContainer = dropdownToggle?.closest('.welcome-dropdown-container');
+
+    if (dropdownToggle && dropdownContainer) {
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownContainer.classList.toggle('active');
+        });
+
+        // Fechar ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!dropdownContainer.contains(e.target)) {
+                dropdownContainer.classList.remove('active');
+            }
+        });
+    }
+
+    // Fallback de segurança caso o Firebase demore
+    setTimeout(() => {
+        revealWelcomeElements();
+    }, 1000);
 });
 
 onAuthStateChanged(auth, async (user) => {
@@ -74,11 +97,11 @@ onAuthStateChanged(auth, async (user) => {
             localStorage.setItem('focoai_user', JSON.stringify(userData));
             updateDashboardUI(userData);
 
-            // Carrega e renderiza as IAs criadas pelo usuário logado no Firebase
             await renderUserAIs(user.uid);
 
         } catch (e) {
             console.error("Erro ao carregar dados do usuário:", e);
+            revealWelcomeElements();
         }
     } else {
         const cachedUser = localStorage.getItem('focoai_user');
@@ -98,7 +121,6 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 function updateDashboardUI(userData) {
-    const welcomeTitle = document.getElementById('welcomeTitle');
     const profileInitial = document.getElementById('profileInitial');
     const popoverName = document.getElementById('popoverName');
     const popoverEmail = document.getElementById('popoverEmail');
@@ -106,33 +128,62 @@ function updateDashboardUI(userData) {
 
     const firstName = userData.firstName || userData.displayName?.split(' ')[0] || userData.email?.split('@')[0] || 'Usuário';
 
-    if (welcomeTitle) welcomeTitle.innerHTML = `Olá, ${firstName} 👋`;
     if (profileInitial) profileInitial.textContent = firstName.charAt(0).toUpperCase();
     if (popoverName) popoverName.textContent = userData.displayName || userData.username || 'FocoPrime User';
     if (popoverEmail) popoverEmail.textContent = userData.email || '';
     if (creditsBadge) creditsBadge.textContent = userData.credits !== undefined ? userData.credits : 250;
 
-    // Transição moderna do Skeleton para o Conteúdo Real (Textos + Botão)
-    const welcomeSkeleton = document.getElementById('welcomeSkeleton');
-    const welcomeRealContent = document.getElementById('welcomeRealContent');
-    const welcomeBtnSkeleton = document.getElementById('welcomeBtnSkeleton');
+    // Ajustar botão se for usuário PRO
     const welcomeActionBtn = document.getElementById('welcomeActionBtn');
-    
-    if (welcomeSkeleton && welcomeRealContent && !welcomeRealContent.classList.contains('loaded')) {
-        welcomeSkeleton.classList.add('fade-out');
-        if (welcomeBtnSkeleton) welcomeBtnSkeleton.classList.add('fade-out');
+    const welcomeActionText = document.getElementById('welcomeActionText');
+    const welcomeActionIcon = document.getElementById('welcomeActionIcon');
 
-        setTimeout(() => {
-            welcomeSkeleton.style.display = 'none';
-            if (welcomeBtnSkeleton) welcomeBtnSkeleton.style.display = 'none';
-            
-            welcomeRealContent.classList.add('loaded');
-            if (welcomeActionBtn) welcomeActionBtn.classList.add('loaded');
-        }, 300);
+    const planName = (userData.plan || '').toLowerCase();
+    const isPro = planName.includes('pro') || planName.includes('premium') || planName.includes('gold');
+
+    if (welcomeActionBtn && welcomeActionText) {
+        if (isPro) {
+            welcomeActionBtn.classList.add('btn-upgrade-gold');
+            if (welcomeActionIcon) welcomeActionIcon.className = 'fi-rr-diamond';
+            welcomeActionText.textContent = 'FocoPrime PRO Ativo';
+        } else {
+            welcomeActionBtn.classList.remove('btn-upgrade-gold');
+            if (welcomeActionIcon) welcomeActionIcon.className = 'fi fi-rr-plus';
+            welcomeActionText.textContent = 'Criar Uma Nova IA';
+        }
     }
+
+    revealWelcomeElements();
 }
 
+function revealWelcomeElements() {
+    const welcomeBtnSkeleton = document.getElementById('welcomeBtnSkeleton');
+    if (welcomeBtnSkeleton) {
+        welcomeBtnSkeleton.classList.add('fade-out');
+        setTimeout(() => {
+            welcomeBtnSkeleton.style.display = 'none';
+        }, 300);
+    }
 
+    const bannerImg = document.getElementById('welcomeBannerImg');
+    const bannerSkeleton = document.getElementById('welcomeBannerSkeleton');
+
+    if (bannerImg && bannerSkeleton) {
+        if (bannerImg.complete) {
+            bannerSkeleton.classList.add('fade-out');
+            bannerImg.classList.add('loaded');
+        } else {
+            bannerImg.addEventListener('load', () => {
+                bannerSkeleton.classList.add('fade-out');
+                bannerImg.classList.add('loaded');
+            });
+            setTimeout(() => {
+                bannerSkeleton.classList.add('fade-out');
+                bannerImg.classList.add('loaded');
+            }, 600);
+        }
+    }
+}
 
 window.handleLogout = async function() {
     try {
