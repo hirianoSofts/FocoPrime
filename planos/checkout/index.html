@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="color-scheme" content="light">
+    
+    <!-- SEO & Metatags -->
+    <title>FocoPrime Studio — Finalizar Assinatura</title>
+    <meta name="description" content="Conclua a assinatura do seu plano na FocoPrime Studio de forma rápida e segura.">
+    <meta name="author" content="FocoPrime">
+    <link rel="canonical" href="https://dashboard.focoprime.online/checkout/">
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/favicon-new.png">
+    <link rel="apple-touch-icon" href="../../assets/favicon-new.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Google Fonts: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <!-- Flaticon UIcons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+    <!-- SDK do PayPal (Sandbox) -->
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
+    <!-- Estilos Alinhados ao Design System do App (Página de Cadastro / Planos) -->
+    <style>
+        :root {
+          --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          
+          --bg-app: #ffffff;
+          --bg-surface: #ffffff;
+          --bg-subtle: #f8fafc;
+          
+          --border-color: #e2e8f0;
+          --border-hover: #cbd5e1;
+          --border-focus: #4f46e5;
+          
+          --text-main: #0f172a;
+          --text-muted: #64748b;
+          --text-light: #94a3b8;
+          
+          --primary: #4f46e5;
+          --primary-hover: #4338ca;
+          
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-full: 9999px;
+          
+          --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body.auth-body {
+          background-color: var(--bg-app);
+          font-family: var(--font-main);
+          color: var(--text-main);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 32px 24px;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container Principal Flat (Idêntico ao cadastro) */
+        .auth-container {
+          width: 100%;
+          max-width: 400px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+        }
+
+        /* Logotipo */
+        .auth-logo-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 24px;
+        }
+
+        .auth-logo {
+          height: 32px;
+          object-fit: contain;
+        }
+
+        /* Indicador de Passos (3 Linhas Horizontais - Ativo na 2ª) */
+        .step-indicator {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 24px;
+        }
+
+        .step-pill {
+          width: 6px;
+          height: 6px;
+          border-radius: var(--radius-full);
+          background-color: var(--border-color);
+          transition: var(--transition);
+        }
+
+        .step-pill.active {
+          width: 28px;
+          background-color: var(--primary);
+        }
+
+        /* Títulos */
+        .auth-title {
+          font-size: 26px;
+          font-weight: 700;
+          color: var(--text-main);
+          letter-spacing: -0.02em;
+          margin-bottom: 2px;
+          text-align: left;
+          width: 100%;
+        }
+
+        .auth-subtitle {
+          font-size: 14px;
+          color: var(--text-muted);
+          margin-bottom: 24px;
+          text-align: left;
+          width: 100%;
+        }
+
+        /* Layout dos Cards de Informações */
+        .checkout-cards-wrapper {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+
+        .checkout-row-cards {
+          display: flex;
+          gap: 12px;
+          width: 100%;
+        }
+
+        /* Card individual sem fundo (background: transparent) */
+        .info-card {
+          flex: 1;
+          background: transparent;
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          padding: 14px;
+          text-align: left;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.03), 0 2px 4px -2px rgb(0 0 0 / 0.03);
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .info-card.full-width {
+          width: 100%;
+        }
+
+        .info-card-label {
+          font-size: 12px;
+          color: var(--text-muted);
+          font-weight: 500;
+        }
+
+        .info-card-value {
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--text-main);
+        }
+
+        /* Contêiner de Pagamento customizado */
+        .payment-box {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        #paypal-button-container {
+          width: 100%;
+        }
+
+        /* Botão secundário de voltar para planos */
+        .auth-btn-secondary {
+          width: 100%;
+          padding: 12px 16px;
+          background-color: #ffffff;
+          color: var(--text-main);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          font-family: var(--font-main);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
+          text-decoration: none;
+          margin-top: 4px;
+        }
+
+        .auth-btn-secondary:hover {
+          background-color: var(--bg-subtle);
+          border-color: var(--border-hover);
+        }
+
+        .sandbox-notice {
+          font-size: 12px;
+          color: var(--text-light);
+          text-align: center;
+          margin-top: 20px;
+          line-height: 1.5;
+          width: 100%;
+        }
+
+        .sandbox-notice code {
+          background: var(--bg-subtle);
+          padding: 2px 6px;
+          border-radius: 4px;
+          font-family: monospace;
+          color: var(--text-muted);
+        }
+
+        /* Ícones Flaticon */
+        i[class^="fi-"], 
+        i[class*=" fi-"] {
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+    </style>
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- Logotipo FocoPrime -->
+        <div class="auth-logo-wrapper">
+            <img src="../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x32/4f46e5/ffffff?text=FocoPrime'">
+        </div>
+
+        <!-- Indicador de Etapas (Ativo no segundo) -->
+        <div class="step-indicator">
+            <span class="step-pill" id="stepPill1"></span>
+            <span class="step-pill active" id="stepPill2"></span>
+            <span class="step-pill" id="stepPill3"></span>
+        </div>
+
+        <h1 class="auth-title">Finalizar Assinatura</h1>
+        <p class="auth-subtitle">Confirme os detalhes e conclua o pagamento de forma segura.</p>
+
+        <!-- Cards de Informações Separados -->
+        <div class="checkout-cards-wrapper">
+            <!-- Linha superior com 2 cards horizontais: Plano e Cobrança -->
+            <div class="checkout-row-cards">
+                <div class="info-card">
+                    <span class="info-card-label">Plano selecionado</span>
+                    <strong class="info-card-value" id="summaryPlanName">Carregando...</strong>
+                </div>
+                <div class="info-card">
+                    <span class="info-card-label">Ciclo de cobrança</span>
+                    <strong class="info-card-value" id="summaryCycle">Carregando...</strong>
+                </div>
+            </div>
+
+            <!-- Card inferior horizontal: Total a pagar -->
+            <div class="info-card full-width">
+                <span class="info-card-label">Total a pagar</span>
+                <strong class="info-card-value" id="summaryPrice" style="color: var(--primary);">0.00 USD</strong>
+            </div>
+        </div>
+
+        <!-- Caixa de Pagamento -->
+        <div class="payment-box">
+            <!-- Botões do PayPal Customizados -->
+            <div id="paypal-button-container"></div>
+
+            <!-- Botão Voltar para Planos -->
+            <a href="../planos/index.html" class="auth-btn-secondary">
+                <i class="fi fi-rr-arrow-left"></i>
+                Alterar Plano
+            </a>
+        </div>
+
+        <p class="sandbox-notice">
+            Ambiente de Testes PayPal (Sandbox)<br>
+            Conta de Negócios: <code>sb-ojel153692941@business.example.com</code>
+        </p>
+    </div>
+
+    <!-- Script Firebase & PayPal Handler -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwj0vcsUbdFDwFLt3xfOHCC--OhpF6nXs",
+            authDomain: "focoplataforms.firebaseapp.com",
+            databaseURL: "https://focoplataforms-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "focoplataforms",
+            storageBucket: "focoplataforms.firebasestorage.app",
+            messagingSenderId: "363051075501",
+            appId: "1:363051075501:web:3ed9f67c5b46badce34324"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let activeUserUid = null;
+
+        // Capturar parâmetros da URL passados pela página de planos
+        const urlParams = new URLSearchParams(window.location.search);
+        const planName = urlParams.get('plan') || 'Plano Spark';
+        const creditsCount = parseInt(urlParams.get('credits')) || 700;
+        const planPrice = urlParams.get('price') || '20.00';
+        const planCycle = urlParams.get('cycle') || 'Mensal';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('summaryPlanName').textContent = planName;
+            document.getElementById('summaryCycle').textContent = planCycle;
+            document.getElementById('summaryPrice').textContent = `${planPrice} USD`;
+
+            // Verificar autenticação
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    activeUserUid = user.uid;
+                } else {
+                    const cached = localStorage.getItem('focoai_user');
+                    if (cached) {
+                        try {
+                            const parsed = JSON.parse(cached);
+                            activeUserUid = parsed.uid;
+                        } catch(e) {}
+                    }
+                    if (!activeUserUid) {
+                        alert('Sessão expirada. Faça login novamente.');
+                        window.location.href = '../auth/login/index.html';
+                        return;
+                    }
+                }
+
+                // Renderizar botões do PayPal após validar o usuário
+                initPayPalButton();
+            });
+        });
+
+        function initPayPalButton() {
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'silver',
+                    shape: 'rect',
+                    label: 'pay'
+                },
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: planPrice
+                            },
+                            description: `Assinatura ${planName} - FocoPrime Studio (${planCycle})`
+                        }]
+                    });
+                },
+                onApprove: async function(data, actions) {
+                    return actions.order.capture().then(async function(details) {
+                        await savePlanToFirebase(planName, creditsCount);
+                        // Redireciona para a página de sucesso moderna
+                        window.location.href = `sucess/?plan=${encodeURIComponent(planName)}&cycle=${encodeURIComponent(planCycle)}`;
+                    });
+                },
+                onError: function(err) {
+                    console.error('Erro no PayPal:', err);
+                    alert('Ocorreu um erro no processamento do pagamento.');
+                }
+            }).render('#paypal-button-container');
+        }
+
+        async function savePlanToFirebase(planName, creditsCount) {
+            try {
+                const userRef = ref(db, 'users/' + activeUserUid);
+                await update(userRef, {
+                    plan: planName,
+                    credits: creditsCount,
+                    planSelectedAt: new Date().toISOString()
+                });
+
+                const cachedUser = localStorage.getItem('focoai_user');
+                if (cachedUser) {
+                    let userData = JSON.parse(cachedUser);
+                    userData.plan = planName;
+                    userData.credits = creditsCount;
+                    localStorage.setItem('focoai_user', JSON.stringify(userData));
+                }
+            } catch (error) {
+                console.error('Erro ao salvar plano:', error);
+                alert('Erro ao atualizar o plano no banco de dados: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
