@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="color-scheme" content="light">
+    
+    <!-- SEO & Metatags -->
+    <title>FocoPrime Studio — Assinatura Concluída</title>
+    <meta name="description" content="Sua assinatura na FocoPrime Studio foi realizada com sucesso.">
+    <meta name="author" content="FocoPrime">
+    <link rel="canonical" href="https://dashboard.focoprime.online/checkout/sucess/">
+
+    <!-- Favicon & PWA Manifest -->
+    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/favicon-new.png">
+    <link rel="apple-touch-icon" href="../../assets/favicon-new.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Google Fonts: DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    
+    <!-- Flaticon UIcons -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
+    <!-- Estilos Alinhados ao Design System do App -->
+    <style>
+        :root {
+          --font-main: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          
+          --bg-app: #ffffff;
+          --bg-surface: #ffffff;
+          --bg-subtle: #f8fafc;
+          
+          --border-color: #e2e8f0;
+          --border-hover: #cbd5e1;
+          --border-focus: #4f46e5;
+          
+          --text-main: #0f172a;
+          --text-muted: #64748b;
+          --text-light: #94a3b8;
+          
+          --primary: #4f46e5;
+          --primary-hover: #4338ca;
+          --success: #10b981;
+          
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-full: 9999px;
+          
+          --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body.auth-body {
+          background-color: var(--bg-app);
+          font-family: var(--font-main);
+          color: var(--text-main);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 32px 24px;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container Principal Flat */
+        .auth-container {
+          width: 100%;
+          max-width: 400px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+        }
+
+        /* Logotipo */
+        .auth-logo-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 24px;
+        }
+
+        .auth-logo {
+          height: 32px;
+          object-fit: contain;
+        }
+
+        /* Indicador de Passos (3 Linhas Horizontais - Ativo na 3ª) */
+        .step-indicator {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 24px;
+        }
+
+        .step-pill {
+          width: 6px;
+          height: 6px;
+          border-radius: var(--radius-full);
+          background-color: var(--border-color);
+          transition: var(--transition);
+        }
+
+        .step-pill.active {
+          width: 28px;
+          background-color: var(--primary);
+        }
+
+        /* Ícone de Sucesso Destacado */
+        .success-icon-wrapper {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background-color: #d1fae5;
+          color: var(--success);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+          margin-bottom: 20px;
+          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Títulos */
+        .auth-title {
+          font-size: 26px;
+          font-weight: 700;
+          color: var(--text-main);
+          letter-spacing: -0.02em;
+          margin-bottom: 6px;
+          text-align: center;
+          width: 100%;
+        }
+
+        .auth-subtitle {
+          font-size: 14px;
+          color: var(--text-muted);
+          margin-bottom: 24px;
+          text-align: center;
+          width: 100%;
+          line-height: 1.5;
+        }
+
+        /* Resumo Flat Limpo (Sem fundo, idêntico aos cards do checkout) */
+        .order-summary {
+          width: 100%;
+          background: transparent;
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          padding: 16px 18px;
+          margin-bottom: 24px;
+          text-align: left;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.03), 0 2px 4px -2px rgb(0 0 0 / 0.03);
+        }
+
+        .order-summary-row {
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+
+        .order-summary-row:last-child {
+          margin-bottom: 0;
+        }
+
+        .order-summary-row span {
+          color: var(--text-muted);
+        }
+
+        .order-summary-row strong {
+          color: var(--text-main);
+        }
+
+        /* Grupo de Botões (Lado a lado) */
+        .auth-buttons-group {
+          display: flex;
+          gap: 10px;
+          width: 100%;
+        }
+
+        /* Botão Primário ("Concluído") */
+        .auth-btn-primary {
+          flex: 1;
+          position: relative;
+          padding: 12px 16px;
+          background-color: var(--text-main);
+          color: #ffffff;
+          border: none;
+          border-radius: var(--radius-sm);
+          font-family: var(--font-main);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          text-decoration: none;
+        }
+
+        .auth-btn-primary:hover {
+          background-color: var(--primary);
+        }
+
+        /* Botão Secundário ("Reportar") */
+        .auth-btn-secondary {
+          flex: 1;
+          padding: 12px 16px;
+          background-color: #ffffff;
+          color: var(--text-main);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          font-family: var(--font-main);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: var(--shadow-sm);
+          transition: var(--transition);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          text-decoration: none;
+        }
+
+        .auth-btn-secondary:hover {
+          background-color: var(--bg-subtle);
+          border-color: var(--border-hover);
+        }
+
+        /* Texto Cancele quando quiser */
+        .cancel-notice {
+          font-size: 13px;
+          color: var(--text-muted);
+          text-align: center;
+          margin-top: 16px;
+          width: 100%;
+        }
+
+        /* Ícones Flaticon */
+        i[class^="fi-"], 
+        i[class*=" fi-"] {
+          line-height: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+    </style>
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- Logotipo FocoPrime -->
+        <div class="auth-logo-wrapper">
+            <img src="../../../assets/logo.png" alt="FocoPrime Logo" class="auth-logo" onerror="this.src='https://placehold.co/120x32/4f46e5/ffffff?text=FocoPrime'">
+        </div>
+
+        <!-- Indicador de Passos (3 Linhas Horizontais - Ativo na 3ª) -->
+        <div class="step-indicator">
+            <span class="step-pill"></span>
+            <span class="step-pill"></span>
+            <span class="step-pill active"></span>
+        </div>
+
+        <!-- Ícone de Sucesso -->
+        <div class="success-icon-wrapper">
+            <i class="fi fi-rr-check"></i>
+        </div>
+
+        <h1 class="auth-title">Pagamento Concluído!</h1>
+        <p class="auth-subtitle">A sua assinatura foi processada com sucesso e os seus créditos já foram atualizados na conta.</p>
+
+        <!-- Resumo -->
+        <div class="order-summary">
+            <div class="order-summary-row">
+                <span>Plano ativado</span>
+                <strong id="successPlanName">Plano Spark</strong>
+            </div>
+            <div class="order-summary-row">
+                <span>Ciclo de vigência</span>
+                <strong id="successCycle">Mensal</strong>
+            </div>
+            <div class="order-summary-row">
+                <span>Status da conta</span>
+                <strong style="color: var(--success);">Ativo</strong>
+            </div>
+        </div>
+
+        <!-- Botões de Ação (Reportar & Concluído) -->
+        <div class="auth-buttons-group">
+            <a href="https://wa.me/" target="_blank" rel="noopener" class="auth-btn-secondary">
+                <i class="fi fi-rr-triangle-warning"></i>
+                Reportar
+            </a>
+            <a href="https://dashboard.focoprime.online" class="auth-btn-primary">
+                <span>Concluído</span>
+                <i class="fi fi-rr-check"></i>
+            </a>
+        </div>
+
+        <!-- Texto Informativo -->
+        <p class="cancel-notice">Cancele quando quiser</p>
+    </div>
+
+    <!-- Script para capturar dados da URL -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        const cycle = urlParams.get('cycle');
+
+        if (plan) {
+            document.getElementById('successPlanName').textContent = plan;
+        }
+        if (cycle) {
+            document.getElementById('successCycle').textContent = cycle;
+        }
+    </script>
+</body>
+</html>
