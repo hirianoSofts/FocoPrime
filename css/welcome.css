@@ -19,8 +19,8 @@ css/welcome.css
   --text-muted: #64748b;
   --text-light: #94a3b8;
   
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
+  --primary: #8F00FF;
+  --primary-hover: #cbd5e1;
   
   --danger: #ef4444;
   --danger-bg: #fef2f2;
@@ -392,10 +392,10 @@ body {
 
 /* Botão + Compacto */
 .foco-tool-btn {
-  width: 36px !important;
-  min-width: 36px !important;
-  max-width: 36px !important;
-  height: 36px !important;
+  width: 30px !important;
+  min-width: 30px !important;
+  max-width: 30px !important;
+  height: 30px !important;
   padding: 0 !important;
   border-radius: var(--radius-sm);
   background: var(--bg-subtle);
@@ -444,11 +444,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 6px 10px;
+  padding: 7px 12px;
   background: var(--bg-app);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--text-muted);
   white-space: nowrap;
@@ -467,9 +467,9 @@ body {
 
 /* Botão Enviar Redondo */
 .foco-send-btn.foco-send-round {
-  width: 38px !important;
-  min-width: 38px !important;
-  height: 38px !important;
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 30px !important;
   padding: 0 !important;
   border-radius: 9999px !important;
   background: var(--primary);
