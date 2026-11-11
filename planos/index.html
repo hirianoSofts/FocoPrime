@@ -46,7 +46,6 @@
       padding: 0 10px;
     }
 
-    /* Billing Toggle (Mensal / Anual) */
     .billing-toggle-wrapper {
       display: flex;
       justify-content: center;
@@ -120,7 +119,6 @@
       display: inline-block;
     }
 
-    /* Cards de Planos Grid */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -173,7 +171,6 @@
       font-size: 13px;
       color: var(--text-muted);
       margin-bottom: 16px;
-      min-height: auto;
     }
 
     .price-box {
@@ -242,7 +239,6 @@
       cursor: not-allowed;
     }
 
-    /* Estado de Loading Giratório no Botão (Sem Texto) */
     .plan-btn.loading {
       color: transparent !important;
       pointer-events: none;
@@ -291,7 +287,6 @@
       background: var(--primary-hover);
     }
 
-    /* Seção Tabela Comparativa */
     .comparison-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
@@ -347,7 +342,6 @@
       color: var(--danger);
     }
 
-    /* Barras de Rodapé (Cancelamento e Políticas) */
     .guarantees-bar {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -382,7 +376,6 @@
       line-height: 1.4;
     }
 
-    /* Responsividade refinada para Mobile */
     @media (max-width: 900px) {
       .plans-container {
         padding: 16px 10px 40px 10px;
@@ -414,7 +407,6 @@
           <p>Escolha o plano ideal para impulsionar seus agentes de Inteligência Artificial.</p>
         </div>
 
-        <!-- Seletor Mensal / Anual (10% de desconto) -->
         <div class="billing-toggle-wrapper">
           <span id="monthlyLabel" class="active">Mensal</span>
           <label class="switch">
@@ -424,7 +416,6 @@
           <span id="annualLabel">Anual <span class="discount-badge">-10% OFF</span></span>
         </div>
 
-        <!-- Grid de Planos -->
         <div class="pricing-grid">
           
           <!-- Plano Base -->
@@ -442,10 +433,10 @@
               <li class="disabled"><i class="fi fi-rr-cross"></i> Upload de imagens não incluso</li>
               <li class="disabled"><i class="fi fi-rr-cross"></i> PWA Mobile & Customização</li>
             </ul>
-            <button class="plan-btn btn-outline-plan" id="btnPlanBase" onclick="window.selectPlan('Plano Base', 250, this)">Escolher Plano Base</button>
+            <button class="plan-btn btn-outline-plan" id="btnPlanBase" onclick="window.selectPlan('Plano Base', 250, 0, this)">Escolher Plano Base</button>
           </div>
 
-          <!-- Plano Spark (Destaque) -->
+          <!-- Plano Spark -->
           <div class="pricing-card featured">
             <div class="popular-tag">Mais Popular</div>
             <h3>Plano Spark</h3>
@@ -463,7 +454,7 @@
               <li><i class="fi fi-rr-check"></i> Template personalizável</li>
               <li><i class="fi fi-rr-check"></i> PWA mobile</li>
             </ul>
-            <button class="plan-btn btn-solid-plan" id="btnPlanSpark" onclick="window.selectPlan('Plano Spark', 700, this)">Assinar Spark</button>
+            <button class="plan-btn btn-solid-plan" id="btnPlanSpark" onclick="window.selectPlan('Plano Spark', 700, 20, this)">Assinar Spark</button>
           </div>
 
           <!-- Plano Focos Pro -->
@@ -484,12 +475,11 @@
               <li><i class="fi fi-rr-check"></i> Cadastro de usuários & Histórico</li>
               <li><i class="fi fi-rr-check"></i> Ads integração avançada</li>
             </ul>
-            <button class="plan-btn btn-outline-plan" id="btnPlanPro" onclick="window.selectPlan('Focos Pro', 1500, this)">Assinar Pro</button>
+            <button class="plan-btn btn-outline-plan" id="btnPlanPro" onclick="window.selectPlan('Focos Pro', 1500, 50, this)">Assinar Pro</button>
           </div>
 
         </div>
 
-        <!-- Tabela Comparativa -->
         <div class="comparison-section">
           <h2>Comparação Detalhada de Recursos</h2>
           <div class="comparison-table-wrapper">
@@ -550,7 +540,6 @@
           </div>
         </div>
 
-        <!-- Barra de Políticas e Cancelamento -->
         <div class="guarantees-bar">
           <div class="guarantee-item">
             <i class="fi fi-rr-shield-check"></i>
@@ -590,7 +579,42 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
+    // Mapeamento completo dos recursos (features) de cada plano
+    const PLAN_FEATURES_MAP = {
+      "Plano Base": {
+        aiLimit: 1,
+        domain: "Gratuito (.focoprime.online)",
+        messagesPerDay: 10,
+        imageUploadsPerDay: 0,
+        pwaMobile: false,
+        adsIntegration: false,
+        userRegistrationHistory: false,
+        templateCustomization: false
+      },
+      "Plano Spark": {
+        aiLimit: 4,
+        domain: "Personalizado",
+        tokens: 700,
+        imageUploadsPerDay: 3,
+        pwaMobile: true,
+        adsIntegration: true,
+        userRegistrationHistory: false,
+        templateCustomization: true
+      },
+      "Focos Pro": {
+        aiLimit: 10,
+        domain: "Personalizado",
+        tokens: 1500,
+        imageUploadsPerDay: 10,
+        pwaMobile: true,
+        adsIntegration: "Avançado",
+        userRegistrationHistory: true,
+        templateCustomization: true
+      }
+    };
+
     let activeUserUid = null;
+    let isAnnualBilling = false;
 
     document.addEventListener('DOMContentLoaded', () => {
       const appContainer = document.getElementById('appContainer');
@@ -606,7 +630,6 @@
         initHeaderListeners();
       }
 
-      // Validação de Autenticação ao carregar a página de planos
       onAuthStateChanged(auth, (user) => {
         if (user) {
           activeUserUid = user.uid;
@@ -625,7 +648,6 @@
         }
       });
 
-      // Lógica de alternância Mensal / Anual
       const billingToggle = document.getElementById('billingToggle');
       const monthlyLabel = document.getElementById('monthlyLabel');
       const annualLabel = document.getElementById('annualLabel');
@@ -633,9 +655,9 @@
       const periods = document.querySelectorAll('.pricing-card .period');
 
       billingToggle.addEventListener('change', () => {
-        const isAnnual = billingToggle.checked;
+        isAnnualBilling = billingToggle.checked;
         
-        if (isAnnual) {
+        if (isAnnualBilling) {
           monthlyLabel.classList.remove('active');
           annualLabel.classList.add('active');
         } else {
@@ -644,62 +666,74 @@
         }
 
         amounts.forEach(el => {
-          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
+          el.textContent = isAnnualBilling ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
         });
 
         periods.forEach(el => {
-          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
+          el.textContent = isAnnualBilling ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
         });
       });
     });
 
-    // Função global para selecionar o plano, ativar o spinner no botão, salvar no Firebase e redirecionar
-    window.selectPlan = async function(planName, creditsCount, buttonElement) {
+    window.selectPlan = async function(planName, creditsCount, baseMonthlyPrice, buttonElement) {
+      if (!activeUserUid) {
+        const cached = localStorage.getItem('focoai_user');
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          activeUserUid = parsed.uid;
+        }
+      }
+
+      if (!activeUserUid) {
+        alert('Sessão expirada. Faça login novamente.');
+        window.location.href = '../auth/login/index.html';
+        return;
+      }
+
       buttonElement.classList.add('loading');
       buttonElement.disabled = true;
 
+      // ATUALIZAÇÃO CRUCIAL: Salva imediatamente no Firebase as features do plano escolhido (seja gratuito ou pago)
+      await savePlanToFirebase(planName, creditsCount);
+
+      // Se for gratuito (Plano Base), vai direto para o dashboard
+      if (baseMonthlyPrice === 0) {
+        window.location.href = '../index.html';
+        return;
+      }
+
+      // Se for pago, calcula o valor e redireciona para o checkout preservando as informações
+      let finalPriceUSD = isAnnualBilling ? (baseMonthlyPrice * 12 * 0.9).toFixed(2) : baseMonthlyPrice.toFixed(2);
+      let billingCycleName = isAnnualBilling ? 'Anual' : 'Mensal';
+
+      window.location.href = `../planos/checkout/?plan=${encodeURIComponent(planName)}&credits=${creditsCount}&price=${finalPriceUSD}&cycle=${encodeURIComponent(billingCycleName)}`;
+    };
+
+    async function savePlanToFirebase(planName, creditsCount) {
       try {
-        if (!activeUserUid) {
-          const cached = localStorage.getItem('focoai_user');
-          if (cached) {
-            const parsed = JSON.parse(cached);
-            activeUserUid = parsed.uid;
-          }
-        }
-
-        if (!activeUserUid) {
-          alert('Sessão expirada. Faça login novamente.');
-          window.location.href = '../auth/login/index.html';
-          return;
-        }
-
-        // Salva o plano e os créditos no Firebase Realtime Database
+        const planFeatures = PLAN_FEATURES_MAP[planName] || {};
         const userRef = ref(db, 'users/' + activeUserUid);
+        
         await update(userRef, {
           plan: planName,
           credits: creditsCount,
+          features: planFeatures,
           planSelectedAt: new Date().toISOString()
         });
 
-        // Atualiza também no localStorage
         const cachedUser = localStorage.getItem('focoai_user');
         if (cachedUser) {
           let userData = JSON.parse(cachedUser);
           userData.plan = planName;
           userData.credits = creditsCount;
+          userData.features = planFeatures;
           localStorage.setItem('focoai_user', JSON.stringify(userData));
         }
-
-        // Redireciona para o Dashboard principal
-        window.location.href = '../index.html';
-
       } catch (error) {
         console.error('Erro ao salvar plano:', error);
-        buttonElement.classList.remove('loading');
-        buttonElement.disabled = false;
-        alert('Erro ao salvar o plano escolhido: ' + error.message);
+        alert('Erro ao atualizar o plano: ' + error.message);
       }
-    };
+    }
   </script>
 </body>
 </html>
